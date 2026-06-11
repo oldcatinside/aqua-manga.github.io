@@ -1109,14 +1109,15 @@ function bindEvents() {
 
 async function initialize() {
   document.body.classList.toggle("manage-mode", IS_MANAGE_MODE);
+  document.querySelector("#openManager").hidden = !IS_MANAGE_MODE;
   document.querySelector("#currentYear").textContent = new Date().getFullYear();
   document.querySelector(".search-box kbd").textContent = /Mac|iPhone|iPad/.test(
     navigator.platform,
   )
     ? "⌘ K"
     : "Ctrl K";
-  elements.audio.volume = 0.8;
-  elements.volumeBar.style.setProperty("--range-progress", "80%");
+  elements.audio.volume = 0.45;
+  elements.volumeBar.style.setProperty("--range-progress", "45%");
   bindEvents();
   applyPlayerTheme(state.playerTheme);
 

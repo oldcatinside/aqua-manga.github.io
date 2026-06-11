@@ -48,6 +48,7 @@ const elements = {
   publishMangaCount: document.querySelector("#publishMangaCount"),
   publishMusicCount: document.querySelector("#publishMusicCount"),
   publishFileSize: document.querySelector("#publishFileSize"),
+  publishError: document.querySelector("#publishError"),
   exportPackage: document.querySelector("#exportPackage"),
   audio: document.querySelector("#audioElement"),
   player: document.querySelector("#player"),
@@ -428,6 +429,42 @@ function crc32(bytes) {
   return (crc ^ 0xffffffff) >>> 0;
 }
 
+function updateCrc32(crc, bytes) {
+  for (const byte of bytes) {
+    crc ^= byte;
+    for (let bit = 0; bit < 8; bit += 1) {
+      crc = (crc >>> 1) ^ (crc & 1 ? 0xedb88320 : 0);
+    }
+  }
+  return crc;
+}
+
+async function crc32Data(data) {
+  if (data instanceof Uint8Array) return crc32(data);
+  if (!(data instanceof Blob)) {
+    throw new TypeError("文件数据不是浏览器可读取的 Blob");
+  }
+
+  let crc = 0xffffffff;
+  if (data.stream) {
+    const reader = data.stream().getReader();
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      crc = updateCrc32(crc, value);
+    }
+  } else {
+    const chunkSize = 4 * 1024 * 1024;
+    for (let offset = 0; offset < data.size; offset += chunkSize) {
+      const chunk = new Uint8Array(
+        await data.slice(offset, Math.min(offset + chunkSize, data.size)).arrayBuffer(),
+      );
+      crc = updateCrc32(crc, chunk);
+    }
+  }
+  return (crc ^ 0xffffffff) >>> 0;
+}
+
 function zipRecord(size) {
   return new Uint8Array(size);
 }
@@ -456,19 +493,28 @@ async function createZip(entries) {
 
   for (const entry of entries) {
     const name = encoder.encode(entry.name.replaceAll("\\", "/"));
-    const data =
-      entry.data instanceof Uint8Array
-        ? entry.data
-        : new Uint8Array(await entry.data.arrayBuffer());
-    const checksum = crc32(data);
+    const data = entry.data;
+    const size = data instanceof Uint8Array ? data.byteLength : data?.size;
+    if (!Number.isSafeInteger(size) || size < 0) {
+      throw new TypeError(`无法读取文件：${entry.name}`);
+    }
+    if (size > 0xffffffff) {
+      throw new RangeError(`文件超过 ZIP 格式上限：${entry.name}`);
+    }
+    let checksum;
+    try {
+      checksum = await crc32Data(data);
+    } catch (error) {
+      throw new Error(`读取“${entry.name}”失败：${error.message}`, { cause: error });
+    }
     const local = zipRecord(30 + name.length);
     writeUint32(local, 0, 0x04034b50);
     writeUint16(local, 4, 20);
     writeUint16(local, 6, 0x0800);
     writeUint16(local, 8, 0);
     writeUint32(local, 14, checksum);
-    writeUint32(local, 18, data.length);
-    writeUint32(local, 22, data.length);
+    writeUint32(local, 18, size);
+    writeUint32(local, 22, size);
     writeUint16(local, 26, name.length);
     local.set(name, 30);
     localParts.push(local, data);
@@ -480,13 +526,13 @@ async function createZip(entries) {
     writeUint16(central, 8, 0x0800);
     writeUint16(central, 10, 0);
     writeUint32(central, 16, checksum);
-    writeUint32(central, 20, data.length);
-    writeUint32(central, 24, data.length);
+    writeUint32(central, 20, size);
+    writeUint32(central, 24, size);
     writeUint16(central, 28, name.length);
     writeUint32(central, 42, offset);
     central.set(name, 46);
     centralParts.push(central);
-    offset += local.length + data.length;
+    offset += local.length + size;
   }
 
   const centralSize = centralParts.reduce((sum, part) => sum + part.length, 0);
@@ -583,6 +629,8 @@ async function exportPublishPackage() {
   const label = button.querySelector("span");
   button.disabled = true;
   label.textContent = "正在整理发布文件...";
+  elements.publishError.hidden = true;
+  elements.publishError.textContent = "";
   try {
     const packageBlob = await buildPublishPackage();
     const url = URL.createObjectURL(packageBlob);
@@ -596,7 +644,14 @@ async function exportPublishPackage() {
     showToast("发布包已生成");
   } catch (error) {
     console.error(error);
-    showToast("发布包生成失败，请检查浏览器可用空间");
+    const detail =
+      error?.message ||
+      (error?.name === "QuotaExceededError"
+        ? "浏览器存储空间不足"
+        : "浏览器无法读取某个上传文件");
+    elements.publishError.textContent = `生成失败：${detail}。请刷新管理页面后重试；如果仍失败，请检查音乐文件是否过大。`;
+    elements.publishError.hidden = false;
+    showToast("发布包生成失败，详情已显示在按钮下方");
   } finally {
     button.disabled = false;
     label.textContent = "下载 aqua-manga-publish.zip";

@@ -1,0 +1,306 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Aqua Manga - 一个分享漫画与音乐收藏的蓝粉色个人空间。"
+    />
+    <meta name="theme-color" content="#f7f9ff" />
+    <title>Aqua Manga</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="ambient ambient-one"></div>
+    <div class="ambient ambient-two"></div>
+
+    <header class="site-header">
+      <a class="brand" href="#" aria-label="Aqua Manga 首页">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 40 40">
+            <circle cx="20" cy="9" r="4" />
+            <path d="M20 13v20M12 19h16M8 25c1 6 5 9 12 9s11-3 12-9M8 25l-3 3M32 25l3 3" />
+          </svg>
+        </span>
+        <span>
+          <strong>aqua</strong>
+          <small>manga</small>
+        </span>
+      </a>
+
+      <div class="collection-counts" aria-label="收藏数量">
+        <div><strong id="mangaCount">0</strong><span>漫画</span></div>
+        <i></i>
+        <div><strong id="musicCount">0</strong><span>音乐</span></div>
+      </div>
+
+      <nav class="main-nav" aria-label="主要导航">
+        <button class="nav-button active" data-view="manga" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v17H6.5A2.5 2.5 0 0 0 4 22V5.5Z" />
+            <path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H13v17h4.5A2.5 2.5 0 0 1 20 22V5.5Z" />
+          </svg>
+          漫画推荐
+        </button>
+        <button class="nav-button" data-view="music" type="button">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M9 18V5l11-2v13" />
+            <circle cx="6" cy="18" r="3" />
+            <circle cx="17" cy="16" r="3" />
+          </svg>
+          音乐收藏
+        </button>
+      </nav>
+
+      <button class="manage-button" id="openManager" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M12 5v14M5 12h14" />
+        </svg>
+        添加收藏
+      </button>
+    </header>
+
+    <main>
+      <section class="content-shell" id="mangaView">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">こんあくあー！ · MANGA SHELF</p>
+            <h2>漫画推荐</h2>
+          </div>
+          <label class="search-box">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="11" cy="11" r="7" />
+              <path d="m20 20-4-4" />
+            </svg>
+            <input id="mangaSearch" type="search" placeholder="搜索漫画名称或作者..." />
+            <kbd>⌘ K</kbd>
+          </label>
+        </div>
+
+        <div class="manga-grid" id="mangaGrid"></div>
+        <div class="empty-state" id="mangaEmpty" hidden>
+          <span>水</span>
+          <h3>没有找到相关漫画</h3>
+          <p>换个关键词试试，或添加一本新的收藏。</p>
+        </div>
+      </section>
+
+      <section class="content-shell" id="musicView" hidden>
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">AQUA COLOR · MUSIC ROOM</p>
+            <h2>音乐收藏</h2>
+          </div>
+          <label class="search-box">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="11" cy="11" r="7" />
+              <path d="m20 20-4-4" />
+            </svg>
+            <input id="musicSearch" type="search" placeholder="搜索歌曲或音乐人..." />
+          </label>
+        </div>
+
+        <div class="music-intro">
+          <div class="vinyl">
+            <div class="vinyl-ring"><span></span></div>
+          </div>
+          <div>
+            <p>あくあ色の音楽時間</p>
+            <h3>物語といっしょに、音楽を。</h3>
+            <span>点击任意歌曲，在右下角播放器中开始播放。</span>
+          </div>
+          <button id="playAll" type="button">
+            <svg viewBox="0 0 24 24"><path d="m9 7 8 5-8 5V7Z" /></svg>
+            播放全部
+          </button>
+        </div>
+
+        <div class="music-list-header" aria-hidden="true">
+          <span>#</span><span>歌曲</span><span>专辑 / 备注</span><span>时长</span><span></span>
+        </div>
+        <div class="music-list" id="musicList"></div>
+        <div class="empty-state" id="musicEmpty" hidden>
+          <span>音</span>
+          <h3>音乐架还是空的</h3>
+          <p>打开“添加收藏”，上传你喜欢的音乐。</p>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="footer-brand">aqua manga <span>⚓</span></div>
+      <p>みんなをあくあ色に染めちゃうんだからー！！</p>
+      <span>© <span id="currentYear"></span> AQUA MANGA</span>
+    </footer>
+
+    <aside class="player" id="player" aria-label="音乐播放器">
+      <div class="player-track">
+        <div class="player-cover" id="playerCover"><span>♪</span></div>
+        <div class="player-meta">
+          <strong id="playerTitle">从音乐收藏中选择歌曲</strong>
+          <span id="playerArtist">Aqua Manga Radio</span>
+        </div>
+        <div class="player-actions">
+          <button class="icon-button" id="playerThemeToggle" type="button" title="播放器外观">
+            <svg viewBox="0 0 24 24">
+              <path d="M12 3a9 9 0 1 0 0 18h1.5a1.8 1.8 0 0 0 0-3.6H12a1.5 1.5 0 0 1 0-3h2.5A6.5 6.5 0 0 0 21 8c0-3-4-5-9-5Z" />
+              <circle cx="7.5" cy="9" r=".8" /><circle cx="10" cy="6.5" r=".8" /><circle cx="14" cy="6.5" r=".8" />
+            </svg>
+          </button>
+          <button class="icon-button close-player" id="minimizePlayer" type="button" title="收起播放器">
+            <svg viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" /></svg>
+          </button>
+        </div>
+      </div>
+      <div class="player-theme-menu" id="playerThemeMenu" hidden>
+        <button data-player-theme="navy" type="button"><i class="theme-dot navy"></i>深海蓝</button>
+        <button data-player-theme="aqua" type="button"><i class="theme-dot aqua"></i>阿库娅色</button>
+        <button data-player-theme="pink" type="button"><i class="theme-dot pink"></i>粉紫渐变</button>
+        <button data-player-theme="glass" type="button"><i class="theme-dot glass"></i>毛玻璃</button>
+      </div>
+      <div class="player-progress">
+        <span id="currentTime">0:00</span>
+        <input id="seekBar" type="range" min="0" max="100" value="0" aria-label="播放进度" />
+        <span id="duration">0:00</span>
+      </div>
+      <div class="player-controls">
+        <button class="icon-button" id="playMode" type="button" title="顺序播放">
+          <svg class="mode-sequence" viewBox="0 0 24 24">
+            <path d="M4 7h13l3 3-3 3M4 17h9" />
+          </svg>
+        </button>
+        <div class="center-controls">
+          <button class="icon-button" id="prevTrack" type="button" title="上一首">
+            <svg viewBox="0 0 24 24"><path d="M6 5v14M18 6l-9 6 9 6V6Z" /></svg>
+          </button>
+          <button class="play-button" id="togglePlay" type="button" title="播放">
+            <svg class="play-icon" viewBox="0 0 24 24"><path d="m9 7 8 5-8 5V7Z" /></svg>
+            <svg class="pause-icon" viewBox="0 0 24 24"><path d="M9 7v10M15 7v10" /></svg>
+          </button>
+          <button class="icon-button" id="nextTrack" type="button" title="下一首">
+            <svg viewBox="0 0 24 24"><path d="M18 5v14M6 6l9 6-9 6V6Z" /></svg>
+          </button>
+        </div>
+        <label class="volume-control" title="音量">
+          <svg viewBox="0 0 24 24"><path d="M5 10v4h4l4 4V6L9 10H5ZM16 9c1.5 1.5 1.5 4.5 0 6" /></svg>
+          <input id="volumeBar" type="range" min="0" max="1" step="0.05" value="0.8" aria-label="音量" />
+        </label>
+      </div>
+    </aside>
+
+    <button class="player-bubble" id="restorePlayer" type="button" hidden aria-label="展开播放器">
+      <span>♪</span>
+    </button>
+
+    <dialog class="detail-dialog" id="mangaDialog">
+      <button class="dialog-close" data-close-dialog type="button" aria-label="关闭">
+        <svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" /></svg>
+      </button>
+      <div id="mangaDetail"></div>
+    </dialog>
+
+    <dialog class="manager-dialog" id="managerDialog">
+      <div class="manager-header">
+        <div>
+          <p class="section-kicker">AQUA CREW STUDIO</p>
+          <h2>添加新收藏</h2>
+          <span>文件只保存在当前浏览器中</span>
+        </div>
+        <button class="dialog-close" data-close-manager type="button" aria-label="关闭">
+          <svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" /></svg>
+        </button>
+      </div>
+
+      <div class="manager-tabs">
+        <button class="active" data-form="manga" type="button">添加漫画</button>
+        <button data-form="music" type="button">上传音乐</button>
+        <button data-form="library" type="button">管理收藏</button>
+      </div>
+
+      <form class="upload-form" id="mangaForm">
+        <div class="form-grid">
+          <label>
+            <span>漫画名称 *</span>
+            <input name="title" required placeholder="例如：蓝色时期" />
+          </label>
+          <label>
+            <span>作者 *</span>
+            <input name="author" required placeholder="作者名称" />
+          </label>
+          <label>
+            <span>类型</span>
+            <input name="genre" placeholder="例如：青春 / 治愈" />
+          </label>
+          <label>
+            <span>推荐语</span>
+            <input name="quote" placeholder="一句话写下推荐理由" />
+          </label>
+          <label class="full-field">
+            <span>作品简介 *</span>
+            <textarea name="description" required rows="5" placeholder="介绍一下这部漫画打动你的地方..."></textarea>
+          </label>
+        </div>
+        <label class="drop-zone" id="mangaDropZone">
+          <input name="images" type="file" accept="image/*" multiple required />
+          <svg viewBox="0 0 24 24">
+            <path d="M12 16V4m0 0L7 9m5-5 5 5M5 14v5h14v-5" />
+          </svg>
+          <strong>上传封面与漫画截图</strong>
+          <span>可多选，第一张图片将作为封面</span>
+          <small id="mangaFileStatus">支持 JPG、PNG、WEBP</small>
+        </label>
+        <button class="submit-button" type="submit">
+          <span>保存漫画收藏</span>
+          <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" /></svg>
+        </button>
+      </form>
+
+      <form class="upload-form" id="musicForm" hidden>
+        <div class="form-grid">
+          <label>
+            <span>歌曲名称 *</span>
+            <input name="title" required placeholder="歌曲名称" />
+          </label>
+          <label>
+            <span>音乐人 *</span>
+            <input name="artist" required placeholder="歌手 / 作曲家" />
+          </label>
+          <label>
+            <span>专辑或备注</span>
+            <input name="album" placeholder="适合雨天阅读" />
+          </label>
+          <label>
+            <span>封面图片</span>
+            <input name="cover" type="file" accept="image/*" />
+          </label>
+        </div>
+        <label class="drop-zone">
+          <input name="audio" type="file" accept="audio/*" required />
+          <svg viewBox="0 0 24 24">
+            <path d="M9 18V5l11-2v13M9 9l11-2" />
+            <circle cx="6" cy="18" r="3" />
+            <circle cx="17" cy="16" r="3" />
+          </svg>
+          <strong>选择音乐文件</strong>
+          <span>上传后即可在悬浮播放器中播放</span>
+          <small id="musicFileStatus">支持 MP3、WAV、OGG、M4A</small>
+        </label>
+        <button class="submit-button" type="submit">
+          <span>保存音乐收藏</span>
+          <svg viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" /></svg>
+        </button>
+      </form>
+
+      <div class="library-manager" id="libraryManager" hidden>
+        <p>你可以在这里移除漫画和音乐；示例收藏删除后也会保持隐藏。</p>
+        <div id="managerItems"></div>
+      </div>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <audio id="audioElement"></audio>
+
+    <script src="app.js"></script>
+  </body>
+</html>

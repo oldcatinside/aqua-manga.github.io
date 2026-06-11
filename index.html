@@ -242,13 +242,13 @@
             <textarea name="description" required rows="5" placeholder="介绍一下这部漫画打动你的地方..."></textarea>
           </label>
           <label class="full-field">
-            <span>R2 图片网址（推荐用于长期发布）</span>
+            <span>腾讯云 COS 图片网址（推荐用于长期发布）</span>
             <textarea
               name="imageUrls"
               rows="4"
-              placeholder="每行一个公开网址，第一行作为封面&#10;https://你的R2地址/manga/example-cover.webp"
+              placeholder="每行一个公开网址，第一行作为封面&#10;https://存储桶域名.cos.ap-hongkong.myqcloud.com/manga/example-cover.webp"
             ></textarea>
-            <small>已经上传到 Cloudflare R2 时填写；可与下方本地图片二选一。</small>
+            <small>已经上传到腾讯云 COS 时填写；可与下方本地图片二选一。</small>
           </label>
         </div>
         <label class="drop-zone" id="mangaDropZone">
@@ -285,12 +285,12 @@
             <input name="cover" type="file" accept="image/*" />
           </label>
           <label>
-            <span>R2 音乐公开网址</span>
-            <input name="audioUrl" type="url" placeholder="https://你的R2地址/music/example.mp3" />
+            <span>腾讯云 COS 音乐公开网址</span>
+            <input name="audioUrl" type="url" placeholder="https://存储桶域名.cos.ap-hongkong.myqcloud.com/music/example.mp3" />
           </label>
           <label>
-            <span>R2 封面公开网址</span>
-            <input name="coverUrl" type="url" placeholder="https://你的R2地址/music/example.webp" />
+            <span>腾讯云 COS 封面公开网址</span>
+            <input name="coverUrl" type="url" placeholder="https://存储桶域名.cos.ap-hongkong.myqcloud.com/music/example.webp" />
           </label>
         </div>
         <label class="drop-zone">
@@ -301,7 +301,7 @@
             <circle cx="17" cy="16" r="3" />
           </svg>
           <strong>选择音乐文件</strong>
-          <span>本地文件与上方 R2 音乐网址二选一</span>
+          <span>本地文件与上方腾讯云 COS 音乐网址二选一</span>
           <small id="musicFileStatus">支持 MP3、WAV、OGG、M4A</small>
         </label>
         <button class="submit-button" type="submit">

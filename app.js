@@ -717,13 +717,13 @@ async function submitManga(event) {
   try {
     imageUrls = parsePublicUrls(formData.get("imageUrls"));
   } catch (error) {
-    showToast(`R2 图片网址有误：${error.message}`);
+    showToast(`腾讯云 COS 图片网址有误：${error.message}`);
     return;
   }
   const imageFiles = formData.getAll("images").filter((file) => file.size > 0);
   const images = [...imageUrls, ...imageFiles];
   if (!images.length) {
-    showToast("请填写 R2 图片网址或选择本地图片");
+    showToast("请填写腾讯云 COS 图片网址或选择本地图片");
     return;
   }
 
@@ -768,13 +768,13 @@ async function submitMusic(event) {
     audioUrl = parsePublicUrls(formData.get("audioUrl"))[0] || "";
     coverUrl = parsePublicUrls(formData.get("coverUrl"))[0] || "";
   } catch (error) {
-    showToast(`R2 资源网址有误：${error.message}`);
+    showToast(`腾讯云 COS 资源网址有误：${error.message}`);
     return;
   }
   const audio = audioUrl || (audioFile?.size ? audioFile : null);
   const cover = coverUrl || (coverFile?.size ? coverFile : null);
   if (!audio) {
-    showToast("请填写 R2 音乐网址或选择本地音乐文件");
+    showToast("请填写腾讯云 COS 音乐网址或选择本地音乐文件");
     return;
   }
 

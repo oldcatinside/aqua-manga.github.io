@@ -1679,6 +1679,12 @@ dialog::backdrop {
   font-weight: 700;
 }
 
+.form-grid label > small {
+  color: #9a9caf;
+  font-size: 9px;
+  line-height: 1.6;
+}
+
 .form-grid input,
 .form-grid textarea {
   width: 100%;

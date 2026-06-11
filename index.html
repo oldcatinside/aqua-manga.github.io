@@ -241,9 +241,18 @@
             <span>作品简介 *</span>
             <textarea name="description" required rows="5" placeholder="介绍一下这部漫画打动你的地方..."></textarea>
           </label>
+          <label class="full-field">
+            <span>R2 图片网址（推荐用于长期发布）</span>
+            <textarea
+              name="imageUrls"
+              rows="4"
+              placeholder="每行一个公开网址，第一行作为封面&#10;https://你的R2地址/manga/example-cover.webp"
+            ></textarea>
+            <small>已经上传到 Cloudflare R2 时填写；可与下方本地图片二选一。</small>
+          </label>
         </div>
         <label class="drop-zone" id="mangaDropZone">
-          <input name="images" type="file" accept="image/*" multiple required />
+          <input name="images" type="file" accept="image/*" multiple />
           <svg viewBox="0 0 24 24">
             <path d="M12 16V4m0 0L7 9m5-5 5 5M5 14v5h14v-5" />
           </svg>
@@ -275,16 +284,24 @@
             <span>封面图片</span>
             <input name="cover" type="file" accept="image/*" />
           </label>
+          <label>
+            <span>R2 音乐公开网址</span>
+            <input name="audioUrl" type="url" placeholder="https://你的R2地址/music/example.mp3" />
+          </label>
+          <label>
+            <span>R2 封面公开网址</span>
+            <input name="coverUrl" type="url" placeholder="https://你的R2地址/music/example.webp" />
+          </label>
         </div>
         <label class="drop-zone">
-          <input name="audio" type="file" accept="audio/*" required />
+          <input name="audio" type="file" accept="audio/*" />
           <svg viewBox="0 0 24 24">
             <path d="M9 18V5l11-2v13M9 9l11-2" />
             <circle cx="6" cy="18" r="3" />
             <circle cx="17" cy="16" r="3" />
           </svg>
           <strong>选择音乐文件</strong>
-          <span>上传后即可在悬浮播放器中播放</span>
+          <span>本地文件与上方 R2 音乐网址二选一</span>
           <small id="musicFileStatus">支持 MP3、WAV、OGG、M4A</small>
         </label>
         <button class="submit-button" type="submit">

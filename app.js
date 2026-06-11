@@ -165,6 +165,20 @@ function createId(prefix) {
   return `${prefix}-${randomPart}`;
 }
 
+function parsePublicUrls(value) {
+  return String(value || "")
+    .split(/\r?\n/)
+    .map((url) => url.trim())
+    .filter(Boolean)
+    .map((url) => {
+      const parsed = new URL(url);
+      if (!["http:", "https:"].includes(parsed.protocol)) {
+        throw new TypeError(`不支持的网址协议：${parsed.protocol}`);
+      }
+      return parsed.href;
+    });
+}
+
 function showToast(message) {
   elements.toast.textContent = message;
   elements.toast.classList.add("show");
@@ -674,15 +688,16 @@ function applyPlayerTheme(theme) {
 async function readAudioDuration(file) {
   return new Promise((resolve) => {
     const audio = document.createElement("audio");
-    const url = URL.createObjectURL(file);
+    const isRemoteUrl = typeof file === "string";
+    const url = isRemoteUrl ? file : URL.createObjectURL(file);
     audio.preload = "metadata";
     audio.onloadedmetadata = () => {
       resolve(Number.isFinite(audio.duration) ? audio.duration : 0);
-      URL.revokeObjectURL(url);
+      if (!isRemoteUrl) URL.revokeObjectURL(url);
     };
     audio.onerror = () => {
       resolve(0);
-      URL.revokeObjectURL(url);
+      if (!isRemoteUrl) URL.revokeObjectURL(url);
     };
     audio.src = url;
   });
@@ -698,9 +713,17 @@ async function submitManga(event) {
   event.preventDefault();
   const form = event.currentTarget;
   const formData = new FormData(form);
-  const images = formData.getAll("images").filter((file) => file.size > 0);
+  let imageUrls;
+  try {
+    imageUrls = parsePublicUrls(formData.get("imageUrls"));
+  } catch (error) {
+    showToast(`R2 图片网址有误：${error.message}`);
+    return;
+  }
+  const imageFiles = formData.getAll("images").filter((file) => file.size > 0);
+  const images = [...imageUrls, ...imageFiles];
   if (!images.length) {
-    showToast("请至少选择一张图片");
+    showToast("请填写 R2 图片网址或选择本地图片");
     return;
   }
 
@@ -737,10 +760,21 @@ async function submitMusic(event) {
   event.preventDefault();
   const form = event.currentTarget;
   const formData = new FormData(form);
-  const audio = formData.get("audio");
-  const cover = formData.get("cover");
-  if (!audio?.size) {
-    showToast("请选择音乐文件");
+  const audioFile = formData.get("audio");
+  const coverFile = formData.get("cover");
+  let audioUrl = "";
+  let coverUrl = "";
+  try {
+    audioUrl = parsePublicUrls(formData.get("audioUrl"))[0] || "";
+    coverUrl = parsePublicUrls(formData.get("coverUrl"))[0] || "";
+  } catch (error) {
+    showToast(`R2 资源网址有误：${error.message}`);
+    return;
+  }
+  const audio = audioUrl || (audioFile?.size ? audioFile : null);
+  const cover = coverUrl || (coverFile?.size ? coverFile : null);
+  if (!audio) {
+    showToast("请填写 R2 音乐网址或选择本地音乐文件");
     return;
   }
 
@@ -751,7 +785,7 @@ async function submitMusic(event) {
       title: formData.get("title").trim(),
       artist: formData.get("artist").trim(),
       album: formData.get("album").trim() || "Aqua 收藏",
-      cover: cover?.size ? cover : null,
+      cover,
       audio,
       duration: await readAudioDuration(audio),
       local: true,
@@ -849,7 +883,7 @@ async function playTrack(index, autoplay = true) {
     : typeof track.audio === "string"
       ? track.audio
       : URL.createObjectURL(track.audio);
-  state.currentAudioUrl = source;
+  state.currentAudioUrl = typeof track.audio === "string" ? null : source;
   elements.audio.src = source;
   elements.playerTitle.textContent = track.title;
   elements.playerArtist.textContent = `${track.artist} · ${track.album || "Aqua 收藏"}`;

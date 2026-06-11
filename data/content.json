@@ -1,6 +1,77 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-11T00:00:00.000Z",
-  "manga": [],
-  "music": []
+  "generatedAt": "2026-06-11T11:30:09.788Z",
+  "manga": [
+    {
+      "id": "manga-c976be5b-3987-431b-8ffb-88cbc6f0ced2",
+      "title": "脑洞学生会",
+      "author": "むちまろ",
+      "genre": "校园",
+      "quote": "“只要脑洞够大，学生会也能拯救世界。”",
+      "description": "文学青年水之江梅，为了避免留级，成为了学生会的干部。但是，学生会里都是些奇怪的人——！？\n\n和个性丰富的伙伴们编织的，热闹又欢快的校园生活，开始了♪",
+      "coverTheme": "",
+      "images": [
+        "https://pub-11166d887f064458abb3f8bd784321ef.r2.dev/manga/%E8%84%91%E6%B4%9E%E5%AD%A6%E7%94%9F%E4%BC%9A.png"
+      ]
+    },
+    {
+      "id": "manga-ab1819a9-6ed1-425e-ad4c-a68cad544a5f",
+      "title": "二人巴士",
+      "author": "豊林サカネ",
+      "genre": "青春",
+      "quote": "“明天，也一起坐这班车吧。”",
+      "description": "在全镇人口仅有约3000人的偏远乡下生活的春平。\n\n和同级生中唯一升入私立中学的高屋川杏搭乘同一趟巴士上下学。\n\n自小学以来便再也没说过话的两人，某一天终于有了久违的对话契机……？\n\n二人 巴士上开始的，淡蓝色的恋爱未满喜剧。",
+      "coverTheme": "",
+      "images": [
+        "https://pub-11166d887f064458abb3f8bd784321ef.r2.dev/manga/%E4%BA%8C%E4%BA%BA%E5%B7%B4%E5%A3%AB.png"
+      ]
+    },
+    {
+      "id": "manga-a4fbc366-1a1f-40c0-94f7-3d6e184c85bb",
+      "title": "在超市后门吸烟的二人",
+      "author": "地主",
+      "genre": "恋爱",
+      "quote": "“辛苦的时候，就来这里抽根烟吧。”",
+      "description": "在社畜街道上一个劲奔跑的、疲惫的中年男子佐佐木。\n能些许治愈他的，是他平时爱吸的烟，\n还有在常去的超市工作的女店员山田小姐开朗接客的样子。\n工作累了的一天晚上，佐佐木为了寻求治愈去了超市，\n但显眼的山田小姐不在，目前也没有可以吸烟的地方…\n对意志消沉的佐佐木说“这里可以吸烟”的，\n是个穿着奇装异服的叫田山的女性——",
+      "coverTheme": "",
+      "images": [
+        "https://pub-11166d887f064458abb3f8bd784321ef.r2.dev/manga/%E5%9C%A8%E8%B6%85%E5%B8%82%E5%90%8E%E9%97%A8%E5%90%B8%E7%83%9F%E7%9A%84%E4%BA%8C%E4%BA%BA.jpg"
+      ]
+    }
+  ],
+  "music": [
+    {
+      "id": "music-cc61e0b8-108b-457c-9118-fad12e5fedf6",
+      "title": "点描の唄",
+      "artist": "Mrs. GREEN APPLE/井上苑子",
+      "album": "夏",
+      "duration": 307.12,
+      "coverTheme": "",
+      "demo": false,
+      "cover": "https://pub-11166d887f064458abb3f8bd784321ef.r2.dev/music/pic/Mrs.%20GREEN%20APPLE%3B%20%E4%BA%95%E4%B8%8A%E8%8B%91%E5%AD%90%20-%20%E7%82%B9%E6%8F%8F%E3%81%AE%E5%94%84.jpg",
+      "audio": "https://pub-11166d887f064458abb3f8bd784321ef.r2.dev/music/mp3/Mrs.%20GREEN%20APPLE%3B%20%E4%BA%95%E4%B8%8A%E8%8B%91%E5%AD%90%20-%20%E7%82%B9%E6%8F%8F%E3%81%AE%E5%94%84.mp3"
+    },
+    {
+      "id": "music-d7fe1483-2a64-495d-9341-9d4e98e659fe",
+      "title": "星降る海",
+      "artist": "Aqu3ra/早見沙織",
+      "album": "星",
+      "duration": 253.441375,
+      "coverTheme": "",
+      "demo": false,
+      "cover": "https://pub-11166d887f064458abb3f8bd784321ef.r2.dev/music/pic/Aqu3ra%2C%E6%97%A9%E8%A6%8B%E6%B2%99%E7%B9%94%20-%20%E6%98%9F%E9%99%8D%E3%82%8B%E6%B5%B7.jpg",
+      "audio": "https://pub-11166d887f064458abb3f8bd784321ef.r2.dev/music/mp3/Aqu3ra%3B%20%E6%97%A9%E8%A6%8B%E6%B2%99%E7%B9%94%20-%20%E6%98%9F%E9%99%8D%E3%82%8B%E6%B5%B7.mp3"
+    },
+    {
+      "id": "music-bd6c40ef-a5de-4743-8561-69554c362e5e",
+      "title": "High Five",
+      "artist": "清水美依紗",
+      "album": "夏",
+      "duration": 193.832404,
+      "coverTheme": "",
+      "demo": false,
+      "cover": "https://pub-11166d887f064458abb3f8bd784321ef.r2.dev/music/pic/%E6%B8%85%E6%B0%B4%E7%BE%8E%E4%BE%9D%E7%B4%97%20-%20High%20Five.jpg",
+      "audio": "https://pub-11166d887f064458abb3f8bd784321ef.r2.dev/music/mp3/%E6%B8%85%E6%B0%B4%E7%BE%8E%E4%BE%9D%E7%B4%97%20-%20High%20Five.mp3"
+    }
+  ]
 }

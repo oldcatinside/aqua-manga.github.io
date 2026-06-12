@@ -575,7 +575,9 @@ async function initializeSecret() {
   bindSecretEvents();
 
   const unlocked = sessionStorage.getItem(SECRET_UNLOCK_KEY) === "1";
-  if (!unlocked) {
+  if (unlocked) {
+    document.body.classList.remove("secret-locked");
+  } else {
     document.body.classList.add("secret-locked");
     secretElements.lockDialog.showModal();
     setTimeout(() => secretElements.lockForm.elements.password.focus(), 40);

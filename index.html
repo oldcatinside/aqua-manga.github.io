@@ -200,6 +200,52 @@
       <div id="mangaDetail"></div>
     </dialog>
 
+    <dialog class="edit-dialog" id="editMangaDialog">
+      <div class="edit-dialog-header">
+        <div>
+          <p class="section-kicker">EDIT MANGA PROFILE</p>
+          <h2>修改漫画资料</h2>
+          <span>现有封面和截图会完整保留</span>
+        </div>
+        <button class="dialog-close" data-close-edit type="button" aria-label="关闭">
+          <svg viewBox="0 0 24 24"><path d="m6 6 12 12M18 6 6 18" /></svg>
+        </button>
+      </div>
+      <form class="edit-form" id="editMangaForm">
+        <input name="id" type="hidden" />
+        <div class="form-grid">
+          <label>
+            <span>漫画名称 *</span>
+            <input name="title" required />
+          </label>
+          <label>
+            <span>作者 *</span>
+            <input name="author" required />
+          </label>
+          <label>
+            <span>类型</span>
+            <input name="genre" />
+          </label>
+          <label>
+            <span>推荐语</span>
+            <input name="quote" />
+          </label>
+          <label class="full-field">
+            <span>作品简介 *</span>
+            <textarea name="description" required rows="8"></textarea>
+          </label>
+        </div>
+        <div class="edit-preserve-note">
+          <svg viewBox="0 0 24 24"><path d="M12 3 4 7v5c0 5 3.4 8 8 9 4.6-1 8-4 8-9V7l-8-4Z" /><path d="m9 12 2 2 4-4" /></svg>
+          本次只修改文字资料，不会重新上传或替换图片。
+        </div>
+        <button class="submit-button" type="submit">
+          <span>保存修改</span>
+          <svg viewBox="0 0 24 24"><path d="M5 12.5 9.5 17 19 7.5" /></svg>
+        </button>
+      </form>
+    </dialog>
+
     <dialog class="manager-dialog" id="managerDialog">
       <div class="manager-header">
         <div>

@@ -1639,6 +1639,38 @@ dialog::backdrop {
   letter-spacing: 0.14em;
 }
 
+.detail-admin-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.detail-edit-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  color: #746b9e;
+  border: 1px solid rgba(98, 84, 173, 0.15);
+  border-radius: 999px;
+  background: rgba(246, 243, 252, 0.82);
+  cursor: pointer;
+  font-size: 9px;
+  transition: 160ms ease;
+}
+
+.detail-edit-button:hover {
+  color: var(--blue-deep);
+  border-color: rgba(98, 84, 173, 0.28);
+  background: #f1edfa;
+  transform: translateY(-1px);
+}
+
+.detail-edit-button svg {
+  width: 12px;
+}
+
 .detail-copy h2 {
   margin: 18px 0 8px;
   font-family: Georgia, "STSong", "Songti SC", serif;
@@ -1726,6 +1758,75 @@ dialog::backdrop {
   border-radius: 28px;
   background: #fff;
   box-shadow: var(--shadow);
+}
+
+.edit-dialog {
+  width: min(640px, calc(100% - 30px));
+  max-height: min(820px, calc(100vh - 30px));
+  max-height: min(820px, calc(100dvh - 30px));
+  overflow: auto;
+  border-radius: 26px;
+  background: #fff;
+  box-shadow: var(--shadow);
+  scrollbar-width: thin;
+  scrollbar-color: #cf8fbc #f2eef8;
+}
+
+.edit-dialog::-webkit-scrollbar {
+  width: 8px;
+}
+
+.edit-dialog::-webkit-scrollbar-track {
+  border-radius: 999px;
+  background: #f2eef8;
+}
+
+.edit-dialog::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--blue), var(--pink));
+}
+
+.edit-dialog-header {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  padding: 31px 36px 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+.edit-dialog-header h2 {
+  margin: 7px 0 5px;
+  font-family: Georgia, "STSong", "Songti SC", serif;
+  font-size: 27px;
+  font-weight: 500;
+}
+
+.edit-dialog-header > div > span {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.edit-form {
+  padding: 26px 36px 36px;
+}
+
+.edit-preserve-note {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 17px;
+  padding: 10px 12px;
+  color: #716a8c;
+  border: 1px solid #e8e2f3;
+  border-radius: 11px;
+  background: #faf8fd;
+  font-size: 9px;
+}
+
+.edit-preserve-note svg {
+  width: 16px;
+  flex: none;
+  color: var(--blue-deep);
 }
 
 .manager-header {
@@ -2272,7 +2373,9 @@ dialog::backdrop {
   }
 
   .manager-header,
+  .edit-dialog-header,
   .upload-form,
+  .edit-form,
   .library-manager {
     padding-left: 22px;
     padding-right: 22px;

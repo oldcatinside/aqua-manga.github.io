@@ -39,6 +39,8 @@ const elements = {
   musicCount: document.querySelector("#musicCount"),
   mangaDialog: document.querySelector("#mangaDialog"),
   mangaDetail: document.querySelector("#mangaDetail"),
+  editMangaDialog: document.querySelector("#editMangaDialog"),
+  editMangaForm: document.querySelector("#editMangaForm"),
   managerDialog: document.querySelector("#managerDialog"),
   mangaForm: document.querySelector("#mangaForm"),
   musicForm: document.querySelector("#musicForm"),
@@ -295,7 +297,19 @@ function openMangaDetail(id) {
     <div class="detail-layout">
       <div class="detail-cover">${detailCoverMarkup(item)}</div>
       <div class="detail-copy">
-        <span class="detail-number">AQUA PICK · ${String(index + 1).padStart(2, "0")}</span>
+        <div class="detail-admin-row">
+          <span class="detail-number">AQUA PICK · ${String(index + 1).padStart(2, "0")}</span>
+          ${
+            IS_MANAGE_MODE
+              ? `
+                <button class="detail-edit-button" data-edit-manga="${escapeHtml(item.id)}" type="button">
+                  <svg viewBox="0 0 24 24"><path d="m4 20 4.5-1 10-10a2.1 2.1 0 0 0-3-3l-10 10L4 20Z" /><path d="m13.5 7.5 3 3" /></svg>
+                  编辑资料
+                </button>
+              `
+              : ""
+          }
+        </div>
         <h2>${escapeHtml(item.title)}</h2>
         <p class="detail-author">作者 · ${escapeHtml(item.author)}</p>
         <span class="detail-genre">${escapeHtml(item.genre || "未分类")}</span>
@@ -319,7 +333,67 @@ function openMangaDetail(id) {
       </div>
     </div>
   `;
-  elements.mangaDialog.showModal();
+  if (!elements.mangaDialog.open) elements.mangaDialog.showModal();
+}
+
+function openMangaEditor(id) {
+  if (!IS_MANAGE_MODE) return;
+  const item = state.manga.find((entry) => entry.id === id);
+  if (!item) return;
+  const form = elements.editMangaForm;
+  form.elements.id.value = item.id;
+  form.elements.title.value = item.title || "";
+  form.elements.author.value = item.author || "";
+  form.elements.genre.value = item.genre || "";
+  form.elements.quote.value = item.quote || "";
+  form.elements.description.value = item.description || "";
+  elements.editMangaDialog.showModal();
+}
+
+async function submitMangaEdit(event) {
+  event.preventDefault();
+  if (!IS_MANAGE_MODE) return;
+  const form = event.currentTarget;
+  const data = new FormData(form);
+  const id = data.get("id");
+  const index = state.manga.findIndex((item) => item.id === id);
+  if (index < 0) {
+    showToast("没有找到需要修改的漫画");
+    return;
+  }
+
+  const button = form.querySelector(".submit-button");
+  const label = button.querySelector("span");
+  button.disabled = true;
+  label.textContent = "正在保存修改...";
+  try {
+    const current = state.manga[index];
+    const updated = {
+      ...current,
+      title: data.get("title").trim(),
+      author: data.get("author").trim(),
+      genre: data.get("genre").trim() || "其他",
+      quote: data.get("quote").trim(),
+      description: data.get("description").trim(),
+      images: current.images || [],
+      local: true,
+      published: current.published ?? !current.local,
+      createdAt: current.createdAt || Date.now(),
+      updatedAt: Date.now(),
+    };
+    await saveItem("manga", updated);
+    state.manga[index] = updated;
+    renderAll();
+    openMangaDetail(id);
+    elements.editMangaDialog.close();
+    showToast("漫画资料已保存，封面和截图保持不变");
+  } catch (error) {
+    console.error(error);
+    showToast("修改保存失败，请检查浏览器存储空间");
+  } finally {
+    button.disabled = false;
+    label.textContent = "保存修改";
+  }
 }
 
 function switchView(view) {
@@ -381,9 +455,8 @@ async function deleteLibraryItem(kind, id) {
   if (!item) return;
   if (!confirm(`确定删除“${item.title}”吗？`)) return;
 
-  if (item.local) {
-    await removeItem(kind, id);
-  } else {
+  if (item.local) await removeItem(kind, id);
+  if (item.published || !item.local) {
     state.hiddenIds.add(id);
     localStorage.setItem(HIDDEN_ITEMS_KEY, JSON.stringify([...state.hiddenIds]));
   }
@@ -750,6 +823,7 @@ async function submitManga(event) {
       description: formData.get("description").trim(),
       images,
       local: true,
+      published: false,
       createdAt: Date.now(),
     };
     await saveItem("manga", item);
@@ -987,7 +1061,11 @@ function bindEvents() {
     button.addEventListener("click", () => elements.managerDialog.close());
   });
 
-  [elements.mangaDialog, elements.managerDialog].forEach((dialog) => {
+  document.querySelectorAll("[data-close-edit]").forEach((button) => {
+    button.addEventListener("click", () => elements.editMangaDialog.close());
+  });
+
+  [elements.mangaDialog, elements.editMangaDialog, elements.managerDialog].forEach((dialog) => {
     dialog.addEventListener("click", (event) => {
       if (event.target === dialog) dialog.close();
     });
@@ -1004,6 +1082,11 @@ function bindEvents() {
     }
     const card = event.target.closest("[data-manga-id]");
     if (card) openMangaDetail(card.dataset.mangaId);
+  });
+
+  elements.mangaDetail.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-edit-manga]");
+    if (button) openMangaEditor(button.dataset.editManga);
   });
 
   elements.musicList.addEventListener("click", (event) => {
@@ -1024,6 +1107,7 @@ function bindEvents() {
   });
 
   elements.mangaForm.addEventListener("submit", submitManga);
+  elements.editMangaForm.addEventListener("submit", submitMangaEdit);
   elements.musicForm.addEventListener("submit", submitMusic);
   elements.exportPackage.addEventListener("click", exportPublishPackage);
 
@@ -1150,12 +1234,20 @@ async function initialize() {
       const [savedManga, savedMusic] = await Promise.all([getAll("manga"), getAll("music")]);
       const mergeItems = (drafts, published) => {
         const items = new Map();
+        const publishedIds = new Set(published.map((item) => item.id));
         published
           .filter((item) => !state.hiddenIds.has(item.id))
-          .forEach((item) => items.set(item.id, { ...item, local: false }));
+          .forEach((item) =>
+            items.set(item.id, { ...item, local: false, published: true }),
+          );
         drafts
           .sort((a, b) => b.createdAt - a.createdAt)
-          .forEach((item) => items.set(item.id, item));
+          .forEach((item) =>
+            items.set(item.id, {
+              ...item,
+              published: item.published ?? publishedIds.has(item.id),
+            }),
+          );
         return [...items.values()];
       };
       state.manga = mergeItems(savedManga, publishedManga);

@@ -138,7 +138,9 @@ function secretToast(message) {
 function renderSecretBooks() {
   const query = secretElements.search.value.trim().toLocaleLowerCase();
   const filtered = secretState.books.filter((item) =>
-    `${item.title} ${item.jm}`.toLocaleLowerCase().includes(query),
+    `${item.title} ${item.jm} ${(item.tags || []).join(" ")}`
+      .toLocaleLowerCase()
+      .includes(query),
   );
   secretElements.count.textContent = secretState.books.length;
   secretElements.grid.innerHTML = filtered
@@ -171,17 +173,48 @@ function openSecretDetail(id) {
   const item = secretState.books.find((book) => book.id === id);
   if (!item) return;
   const image = item.images?.[0];
+  const imageUrl = image ? escapeSecretHtml(secretObjectUrl(image)) : "";
+  const tags = Array.isArray(item.tags) ? item.tags.filter(Boolean).slice(0, 3) : [];
+  const meta = [
+    tags.length
+      ? `<div class="secret-tags">${tags.map((tag) => `<span>${escapeSecretHtml(tag)}</span>`).join("")}</div>`
+      : "",
+    item.collectedAt
+      ? `<time class="secret-collected-date" datetime="${escapeSecretHtml(item.collectedAt)}">
+          <small>COLLECTED</small>
+          <span>${escapeSecretHtml(formatSecretDate(item.collectedAt))}</span>
+        </time>`
+      : "",
+  ].join("");
+  const titleLength = Array.from(item.title || "").length;
+  const titleClass =
+    titleLength > 30
+      ? "secret-title secret-title-very-long"
+      : titleLength > 18
+        ? "secret-title secret-title-long"
+        : "secret-title";
   secretElements.detail.innerHTML = `
     <div class="secret-detail-layout">
       <div class="secret-star-cover">
-        <span class="secret-cover-glow"></span>
-        ${image ? `<img class="secret-detail-image" src="${escapeSecretHtml(secretObjectUrl(image))}" alt="${escapeSecretHtml(item.title)}封面" />` : secretPlaceholder(item)}
+        ${
+          image
+            ? `
+              <img class="secret-detail-backdrop" src="${imageUrl}" alt="" aria-hidden="true" />
+              <span class="secret-detail-tint" aria-hidden="true"></span>
+              <img class="secret-detail-image" src="${imageUrl}" alt="${escapeSecretHtml(item.title)}封面" />
+            `
+            : secretPlaceholder(item)
+        }
       </div>
       <div class="secret-detail-copy">
         <span class="detail-number">SECRET PICK · ${String(secretState.books.indexOf(item) + 1).padStart(2, "0")}</span>
-        <h2>${escapeSecretHtml(item.title)}</h2>
+        <h2 class="${titleClass}">${escapeSecretHtml(item.title)}</h2>
         <div class="secret-jm"><span>jm</span><strong>${escapeSecretHtml(item.jm)}</strong></div>
-        <blockquote class="secret-recommendation">${escapeSecretHtml(item.quote)}</blockquote>
+        ${meta ? `<div class="secret-detail-meta">${meta}</div>` : ""}
+        <blockquote class="secret-recommendation">
+          <small>RECOMMENDATION</small>
+          <span>${escapeSecretHtml(item.quote)}</span>
+        </blockquote>
         ${
           SECRET_MANAGE_MODE
             ? `<button class="detail-edit-button secret-detail-edit" data-secret-edit="${escapeSecretHtml(item.id)}" type="button">
@@ -210,6 +243,7 @@ function switchSecretManager(view) {
 function resetSecretForm() {
   secretElements.form.reset();
   secretElements.form.elements.id.value = "";
+  secretElements.form.elements.collectedAt.value = secretToday();
   secretElements.submitLabel.textContent = "保存收藏";
   secretElements.cancelEdit.hidden = true;
   secretElements.fileStatus.textContent = "支持 JPG、PNG、WEBP";
@@ -224,6 +258,8 @@ function startSecretEdit(id) {
   form.elements.id.value = item.id;
   form.elements.title.value = item.title;
   form.elements.jm.value = item.jm;
+  form.elements.tags.value = Array.isArray(item.tags) ? item.tags.join("、") : "";
+  form.elements.collectedAt.value = item.collectedAt || "";
   form.elements.quote.value = item.quote;
   form.elements.imageUrls.value = (item.images || [])
     .filter((image) => typeof image === "string")
@@ -266,6 +302,8 @@ async function submitSecretBook(event) {
       id: editingId || secretId(),
       title: data.get("title").trim(),
       jm: String(data.get("jm")).trim(),
+      tags: parseSecretTags(data.get("tags")),
+      collectedAt: String(data.get("collectedAt") || "").trim(),
       quote: data.get("quote").trim(),
       images,
       local: true,
@@ -296,7 +334,13 @@ function renderSecretManager() {
     ? secretState.books.map((item) => `
         <div class="manager-item">
           <div class="manager-thumb">${item.images?.[0] ? `<img src="${escapeSecretHtml(secretObjectUrl(item.images[0]))}" alt="" />` : "✦"}</div>
-          <div><strong>${escapeSecretHtml(item.title)}</strong><span>jm ${escapeSecretHtml(item.jm)}</span></div>
+          <div>
+            <strong>${escapeSecretHtml(item.title)}</strong>
+            <span>
+              jm ${escapeSecretHtml(item.jm)}
+              ${item.collectedAt ? ` · ${escapeSecretHtml(formatSecretDate(item.collectedAt))}` : ""}
+            </span>
+          </div>
           <div class="secret-library-actions">
             <button class="secret-edit-small" data-secret-edit="${escapeSecretHtml(item.id)}" type="button">编辑</button>
             <button class="secret-delete-small" data-secret-delete="${escapeSecretHtml(item.id)}" type="button">移除</button>
@@ -304,6 +348,27 @@ function renderSecretManager() {
         </div>
       `).join("")
     : `<div class="empty-state"><span>空</span><h3>收藏已经清空</h3></div>`;
+}
+
+function parseSecretTags(value) {
+  return [...new Set(
+    String(value || "")
+      .split(/[,，、]/)
+      .map((tag) => tag.trim())
+      .filter(Boolean)
+      .map((tag) => tag.slice(0, 12)),
+  )].slice(0, 3);
+}
+
+function secretToday() {
+  const now = new Date();
+  const local = new Date(now.getTime() - now.getTimezoneOffset() * 60000);
+  return local.toISOString().slice(0, 10);
+}
+
+function formatSecretDate(value) {
+  const match = String(value || "").match(/^(\d{4})-(\d{2})-(\d{2})$/);
+  return match ? `${match[1]}.${match[2]}.${match[3]}` : value;
 }
 
 async function deleteSecretBook(id) {
@@ -450,6 +515,8 @@ async function buildSecretPackage() {
       id: item.id,
       title: item.title,
       jm: item.jm,
+      tags: Array.isArray(item.tags) ? item.tags : [],
+      collectedAt: item.collectedAt || "",
       quote: item.quote,
       images: [],
     };
@@ -573,6 +640,7 @@ async function initializeSecret() {
   document.body.classList.toggle("manage-mode", SECRET_MANAGE_MODE);
   document.querySelector("#openSecretManager").hidden = !SECRET_MANAGE_MODE;
   bindSecretEvents();
+  if (SECRET_MANAGE_MODE) resetSecretForm();
 
   const unlocked = sessionStorage.getItem(SECRET_UNLOCK_KEY) === "1";
   if (unlocked) {

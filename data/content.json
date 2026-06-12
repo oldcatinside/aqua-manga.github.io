@@ -1,7 +1,43 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-11T12:09:30.294Z",
+  "generatedAt": "2026-06-12T07:33:37.157Z",
   "manga": [
+    {
+      "id": "manga-33cebac2-98fd-43ea-93cd-7a05b7a289e7",
+      "title": "阳光马达棒球场！",
+      "author": "须贺达郎",
+      "genre": "日常",
+      "quote": "“下次也要来球场见我哦！”",
+      "description": "“小哥，原来我是你喜欢的类型啊～？”\n一天，在球场被辣妹啤酒小姐缠住了？！\n不过这个女孩，是个超级纯朴的纯情女孩……。\n\n舞台是，某个职业棒球的球场！\n这个每天都有着许多人在此聚集、工作、欢笑、\n上演着人情剧的地方，简直就像是一个“小镇”一样！\n\n其实超纯情的啤酒小姐辣妹琉璃子；\n憧憬着啤酒小姐的便当店看板娘小山田；\n过了巅峰期的老将小次郎，\n以及偷偷来看比赛的老婆雪；\n干了30年球场警备员的沉稳男人岚叔；\n没融入日本的原美国职业棒球大联盟选手丹尼斯等等的，\n由这些充满个性的“住民”们展开的，只要读了就一定能变得元气的球场喜剧♪\n\n来吧，你不也来成为棒球场的“住民”吗？！",
+      "coverTheme": "",
+      "images": [
+        "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/manga/%E9%98%B3%E5%85%89%E9%A9%AC%E8%BE%BE%E6%A3%92%E7%90%83%E5%9C%BA.jpg"
+      ]
+    },
+    {
+      "id": "manga-6f1850e4-f5be-4242-a324-cf841430298b",
+      "title": "每遭放逐就能获得技能的我，在100个世界大开第二轮无双",
+      "author": "日之浦拓",
+      "genre": "异世界",
+      "quote": "\"无论过去还是将来、把我的一切都拿走吧”",
+      "description": "每被放逐一次就能变得更强的青年，以最强之姿重新开场！\n\n在一百个异世界里，被一百支勇者队伍放逐的佣兵艾德，获得了每遭放逐就能取得的超强「放逐技能」，在不知不觉间成了最强的存在！\n\n此时，艾德得知自己遭到放逐的异世界迎来了悲惨的结局。为了拯救过去的同伴──精灵少女蒂亚，最强的他决定重头来过，再次攻略一百个异世界！！\n\n彻底活用第二轮外挂和一百个强力技能，在一百个世界里大开无双──继承了前一轮强度的异世界冒险谭！",
+      "coverTheme": "",
+      "images": [
+        "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/manga/%E6%AF%8F%E9%81%AD%E6%94%BE%E9%80%90%E5%B0%B1%E8%83%BD%E8%8E%B7%E5%BE%97%E6%8A%80%E8%83%BD%E7%9A%84%E6%88%91%EF%BC%8C%E5%9C%A8100%E4%B8%AA%E4%B8%96%E7%95%8C%E5%A4%A7%E5%BC%80%E7%AC%AC%E4%BA%8C%E8%BD%AE%E6%97%A0%E5%8F%8C.jpg"
+      ]
+    },
+    {
+      "id": "manga-cdae8f4a-5c56-4d59-af1e-4f536f940888",
+      "title": "情书与13岁女演员",
+      "author": "じゃが",
+      "genre": "情感",
+      "quote": "“所谓情书，大概就是把没能说出口的话，交给未来的你。”",
+      "description": "在艺人事务所从事财务工作的一色文，\n有一天被告知调动到了经营部。\n他负责的是年仅13岁的童星少女羽贺文乃，\n不可思议的是，她似乎对文很是在意…？\n\n虽然是个孩子，但言行举止比大人更像大人，\n作为职业演员的童星少女与她的经纪人共同编织的戏剧故事！",
+      "coverTheme": "",
+      "images": [
+        "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/manga/%E6%83%85%E4%B9%A6%E4%B8%8E13%E5%B2%81%E5%A5%B3%E6%BC%94%E5%91%98.jpg"
+      ]
+    },
     {
       "id": "manga-55135b59-b702-443c-83cb-7d3c2dab1714",
       "title": "在超市后门吸烟的二人",
@@ -40,6 +76,39 @@
     }
   ],
   "music": [
+    {
+      "id": "music-26b792eb-3a91-4866-9a85-e840abb18bd5",
+      "title": "老人と海",
+      "artist": "ヨルシカ",
+      "album": "海",
+      "duration": 255.468521,
+      "coverTheme": "",
+      "demo": false,
+      "cover": "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/music/pic/%E3%83%A8%E3%83%AB%E3%82%B7%E3%82%AB%20-%20%E8%80%81%E4%BA%BA%E3%81%A8%E6%B5%B7.jpg",
+      "audio": "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/music/mp3/%E3%83%A8%E3%83%AB%E3%82%B7%E3%82%AB%20-%20%E8%80%81%E4%BA%BA%E3%81%A8%E6%B5%B7.mp3"
+    },
+    {
+      "id": "music-722c2f01-f65c-48c8-a21d-c38d4bbfd877",
+      "title": "My Dearest",
+      "artist": "supercell",
+      "album": "绊",
+      "duration": 338.570159,
+      "coverTheme": "",
+      "demo": false,
+      "cover": "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/music/pic/supercell%20-%20My%20Dearest.jpg",
+      "audio": "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/music/mp3/supercell%20-%20My%20Dearest.mp3"
+    },
+    {
+      "id": "music-30703651-fede-41b0-835d-82901749cdaf",
+      "title": "ADAMAS",
+      "artist": "LiSA",
+      "album": "剑",
+      "duration": 222.403991,
+      "coverTheme": "",
+      "demo": false,
+      "cover": "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/music/pic/LiSA%20-%20ADAMAS.jpg",
+      "audio": "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/music/mp3/LiSA%20-%20ADAMAS.mp3"
+    },
     {
       "id": "music-48d73f66-65e3-4025-8311-990291325c2d",
       "title": "星降る海",

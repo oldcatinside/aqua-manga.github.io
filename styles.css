@@ -1553,9 +1553,9 @@ dialog::backdrop {
   z-index: -3;
   object-fit: cover;
   object-position: center;
-  filter: blur(28px) saturate(0.92) brightness(0.9);
-  opacity: 0.58;
-  transform: scale(1.12);
+  filter: blur(25px) saturate(1.18);
+  opacity: 0.62;
+  transform: scale(1.08);
 }
 
 .detail-cover-tint {
@@ -1563,9 +1563,9 @@ dialog::backdrop {
   inset: 0;
   z-index: -2;
   background:
-    linear-gradient(180deg, rgba(44, 37, 80, 0.14), rgba(255, 255, 255, 0.12)),
-    linear-gradient(135deg, rgba(86, 200, 232, 0.12), rgba(233, 138, 187, 0.14));
-  backdrop-filter: blur(4px);
+    linear-gradient(180deg, rgba(44, 37, 80, 0.1), rgba(255, 255, 255, 0.16)),
+    linear-gradient(135deg, rgba(86, 200, 232, 0.14), rgba(233, 138, 187, 0.16));
+  backdrop-filter: blur(3px);
 }
 
 .detail-cover::after {
@@ -1581,20 +1581,15 @@ dialog::backdrop {
 }
 
 .detail-cover-image {
-  width: calc(100% - 44px);
-  height: calc(100% - 44px);
+  width: auto;
+  height: auto;
+  max-width: calc(100% - 36px);
+  max-height: calc(100% - 36px);
   position: relative;
   z-index: 1;
   display: block;
-  object-fit: contain;
-  object-position: center;
-  border: 3px solid rgba(255, 255, 255, 0.9);
-  border-radius: 20px;
-  background: rgba(255, 255, 255, 0.24);
-  box-shadow:
-    0 22px 45px rgba(29, 24, 58, 0.24),
-    0 5px 14px rgba(29, 24, 58, 0.12),
-    inset 0 0 0 1px rgba(98, 84, 173, 0.08);
+  border-radius: 14px;
+  filter: drop-shadow(0 18px 30px rgba(29, 24, 58, 0.24));
 }
 
 .detail-cover .placeholder-cover {
@@ -2261,10 +2256,11 @@ dialog::backdrop {
   }
 
   .detail-cover-image {
-    width: calc(100% - 28px);
-    height: calc(100% - 24px);
-    border-width: 2px;
-    border-radius: 15px;
+    width: auto;
+    height: auto;
+    max-width: calc(100% - 24px);
+    max-height: calc(100% - 20px);
+    border-radius: 11px;
   }
 
   .detail-copy {

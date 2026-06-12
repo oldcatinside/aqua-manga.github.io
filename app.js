@@ -151,6 +151,18 @@ function coverMarkup(item, className = "") {
   return placeholderCover(item, Boolean(item.demo));
 }
 
+function detailCoverMarkup(item) {
+  const cover = item.images?.[0] || item.cover;
+  if (!cover) return placeholderCover(item);
+  const url = escapeHtml(mediaUrl(cover));
+  const alt = escapeHtml(item.title);
+  return `
+    <img class="detail-cover-backdrop" src="${url}" alt="" aria-hidden="true" />
+    <span class="detail-cover-tint" aria-hidden="true"></span>
+    <img class="detail-cover-image" src="${url}" alt="${alt}封面" />
+  `;
+}
+
 function formatTime(seconds) {
   if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
   const minutes = Math.floor(seconds / 60);
@@ -281,7 +293,7 @@ function openMangaDetail(id) {
 
   elements.mangaDetail.innerHTML = `
     <div class="detail-layout">
-      <div class="detail-cover">${coverMarkup(item)}</div>
+      <div class="detail-cover">${detailCoverMarkup(item)}</div>
       <div class="detail-copy">
         <span class="detail-number">AQUA PICK · ${String(index + 1).padStart(2, "0")}</span>
         <h2>${escapeHtml(item.title)}</h2>

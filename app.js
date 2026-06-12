@@ -41,6 +41,9 @@ const elements = {
   mangaDetail: document.querySelector("#mangaDetail"),
   editMangaDialog: document.querySelector("#editMangaDialog"),
   editMangaForm: document.querySelector("#editMangaForm"),
+  secretGateDialog: document.querySelector("#secretGateDialog"),
+  secretGateForm: document.querySelector("#secretGateForm"),
+  secretGateError: document.querySelector("#secretGateError"),
   managerDialog: document.querySelector("#managerDialog"),
   mangaForm: document.querySelector("#mangaForm"),
   musicForm: document.querySelector("#musicForm"),
@@ -1065,10 +1068,38 @@ function bindEvents() {
     button.addEventListener("click", () => elements.editMangaDialog.close());
   });
 
-  [elements.mangaDialog, elements.editMangaDialog, elements.managerDialog].forEach((dialog) => {
+  document.querySelectorAll("[data-close-secret-gate]").forEach((button) => {
+    button.addEventListener("click", () => elements.secretGateDialog.close());
+  });
+
+  [
+    elements.mangaDialog,
+    elements.editMangaDialog,
+    elements.secretGateDialog,
+    elements.managerDialog,
+  ].forEach((dialog) => {
     dialog.addEventListener("click", (event) => {
       if (event.target === dialog) dialog.close();
     });
+  });
+
+  document.querySelector("#openSecretGate").addEventListener("click", () => {
+    elements.secretGateForm.reset();
+    elements.secretGateError.hidden = true;
+    elements.secretGateDialog.showModal();
+    setTimeout(() => elements.secretGateForm.elements.password.focus(), 40);
+  });
+
+  elements.secretGateForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    const password = new FormData(event.currentTarget).get("password");
+    if (password !== "aqua") {
+      elements.secretGateError.hidden = false;
+      event.currentTarget.elements.password.select();
+      return;
+    }
+    sessionStorage.setItem("aqua-secret-unlocked", "1");
+    location.href = `secret.html${IS_MANAGE_MODE ? "?manage=1" : ""}`;
   });
 
   elements.mangaSearch.addEventListener("input", renderManga);

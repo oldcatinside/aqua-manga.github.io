@@ -1160,6 +1160,37 @@ footer {
   letter-spacing: 0.08em;
 }
 
+.footer-end {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.secret-entry {
+  width: 27px;
+  height: 27px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  color: #aaa6ba;
+  border: 1px solid rgba(98, 84, 173, 0.1);
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.55);
+  cursor: pointer;
+  opacity: 0.55;
+  transition: 180ms ease;
+}
+
+.secret-entry:hover {
+  color: var(--blue-deep);
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
+.secret-entry svg {
+  width: 12px;
+}
+
 .footer-brand {
   color: var(--ink);
   font-family: Georgia, serif;
@@ -1772,6 +1803,90 @@ dialog::backdrop {
   scrollbar-color: #cf8fbc #f2eef8;
 }
 
+.secret-gate-dialog {
+  width: min(410px, calc(100% - 30px));
+  overflow: visible;
+  border-radius: 28px;
+  background:
+    radial-gradient(circle at 18% 12%, rgba(86, 200, 232, 0.15), transparent 28%),
+    radial-gradient(circle at 82% 82%, rgba(233, 138, 187, 0.14), transparent 32%),
+    #fff;
+  box-shadow: 0 28px 80px rgba(38, 31, 73, 0.28);
+}
+
+.secret-gate-dialog > .dialog-close {
+  position: absolute;
+  right: 17px;
+  top: 17px;
+}
+
+.secret-gate-dialog form {
+  padding: 42px 38px 36px;
+  text-align: center;
+}
+
+.secret-gate-mark {
+  width: 52px;
+  height: 52px;
+  display: grid;
+  place-items: center;
+  margin: 0 auto 16px;
+  color: white;
+  border-radius: 18px;
+  background: linear-gradient(145deg, var(--blue-deep), var(--pink));
+  box-shadow: 0 12px 28px rgba(98, 84, 173, 0.2);
+  font-size: 20px;
+}
+
+.secret-gate-dialog h2 {
+  margin: 9px 0 8px;
+  font-family: Georgia, "STSong", "Songti SC", serif;
+  font-size: 29px;
+  font-weight: 500;
+}
+
+.secret-gate-dialog form > p:not(.section-kicker, .secret-gate-error) {
+  margin: 0 0 23px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.secret-gate-dialog label {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  text-align: left;
+}
+
+.secret-gate-dialog label span {
+  color: #60647a;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.secret-gate-dialog input {
+  width: 100%;
+  padding: 12px 14px;
+  color: var(--ink);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  outline: none;
+  background: #fbfcff;
+  text-align: center;
+  letter-spacing: 0.22em;
+}
+
+.secret-gate-dialog input:focus {
+  border-color: #afc9f6;
+  box-shadow: 0 0 0 3px rgba(105, 152, 236, 0.09);
+}
+
+.secret-gate-error {
+  margin: 9px 0 -7px;
+  color: #c55e89;
+  font-size: 10px;
+}
+
 .edit-dialog::-webkit-scrollbar {
   width: 8px;
 }
@@ -2217,6 +2332,11 @@ dialog::backdrop {
 
   footer {
     padding-bottom: 170px;
+  }
+
+  .footer-end {
+    width: 100%;
+    justify-content: space-between;
   }
 }
 

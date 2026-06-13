@@ -1,7 +1,19 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-12T07:33:37.157Z",
+  "generatedAt": "2026-06-13T15:43:26.690Z",
   "manga": [
+    {
+      "id": "manga-0c7fbdbb-76f8-4b62-89b9-c95180fa2f66",
+      "title": "以暗杀技能成为异世界最强 ～精通炼金术与暗杀术的我在暗中支配世界～",
+      "author": "coin/进行诸岛",
+      "genre": "异世界",
+      "quote": "“暗杀不是结束，而是支配世界的第一步。”",
+      "description": "任务完成率高达99.9%的暗杀者莱特在某天收到了来自身份成谜的雇主的暗杀委托。令人震惊的是雇主的真实身份竟是战败后，正一点点香消玉殒的异世界女神「米塞斯」。米塞斯希望莱特能暗杀异世界之神「马苏拉·祖鲁」。最强暗杀者的下一个暗杀对象竟是「异世界之神」！？",
+      "coverTheme": "",
+      "images": [
+        "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/manga/%E4%BB%A5%E6%9A%97%E6%9D%80%E6%8A%80%E8%83%BD%E6%88%90%E4%B8%BA%E5%BC%82%E4%B8%96%E7%95%8C%E6%9C%80%E5%BC%BA%20%EF%BD%9E%E7%B2%BE%E9%80%9A%E7%82%BC%E9%87%91%E6%9C%AF%E4%B8%8E%E6%9A%97%E6%9D%80%E6%9C%AF%E7%9A%84%E6%88%91%E5%9C%A8%E6%9A%97%E4%B8%AD%E6%94%AF%E9%85%8D%E4%B8%96%E7%95%8C%EF%BD%9E.jpg"
+      ]
+    },
     {
       "id": "manga-33cebac2-98fd-43ea-93cd-7a05b7a289e7",
       "title": "阳光马达棒球场！",
@@ -19,7 +31,7 @@
       "title": "每遭放逐就能获得技能的我，在100个世界大开第二轮无双",
       "author": "日之浦拓",
       "genre": "异世界",
-      "quote": "\"无论过去还是将来、把我的一切都拿走吧”",
+      "quote": "“无论过去还是将来、把我的一切都拿走吧”",
       "description": "每被放逐一次就能变得更强的青年，以最强之姿重新开场！\n\n在一百个异世界里，被一百支勇者队伍放逐的佣兵艾德，获得了每遭放逐就能取得的超强「放逐技能」，在不知不觉间成了最强的存在！\n\n此时，艾德得知自己遭到放逐的异世界迎来了悲惨的结局。为了拯救过去的同伴──精灵少女蒂亚，最强的他决定重头来过，再次攻略一百个异世界！！\n\n彻底活用第二轮外挂和一百个强力技能，在一百个世界里大开无双──继承了前一轮强度的异世界冒险谭！",
       "coverTheme": "",
       "images": [
@@ -76,6 +88,17 @@
     }
   ],
   "music": [
+    {
+      "id": "music-6c12468f-8401-4e9a-8d62-0b915d95a6fe",
+      "title": "花占い",
+      "artist": "Vaundy",
+      "album": "花",
+      "duration": 207.555563,
+      "coverTheme": "",
+      "demo": false,
+      "cover": "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/music/pic/%E8%8A%B1%E5%8D%A0%E3%81%84.jpg",
+      "audio": "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/music/mp3/Vaundy%20-%20%E8%8A%B1%E5%8D%A0%E3%81%84.mp3"
+    },
     {
       "id": "music-26b792eb-3a91-4866-9a85-e840abb18bd5",
       "title": "老人と海",

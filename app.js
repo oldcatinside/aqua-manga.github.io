@@ -2,6 +2,7 @@ const DB_NAME = "aqua-manga-library";
 const DB_VERSION = 1;
 const HIDDEN_ITEMS_KEY = "aqua-manga-hidden-items";
 const PLAYER_THEME_KEY = "aqua-manga-player-theme";
+const RANDOM_DICE_SOUNDS = ["assets/sfx/dice-1.mp3", "assets/sfx/dice-2.mp3"];
 const IS_MANAGE_MODE =
   location.protocol === "file:" || new URLSearchParams(location.search).get("manage") === "1";
 
@@ -70,7 +71,11 @@ const elements = {
   playerThemeToggle: document.querySelector("#playerThemeToggle"),
   restorePlayer: document.querySelector("#restorePlayer"),
   toast: document.querySelector("#toast"),
+  randomMangaButton: document.querySelector("#randomMangaButton"),
+  randomRollOverlay: document.querySelector("#randomRollOverlay"),
 };
+
+let randomMangaRolling = false;
 
 function openDatabase() {
   return new Promise((resolve, reject) => {
@@ -337,6 +342,43 @@ function openMangaDetail(id) {
     </div>
   `;
   if (!elements.mangaDialog.open) elements.mangaDialog.showModal();
+}
+
+function playRandomDiceSound() {
+  const source = RANDOM_DICE_SOUNDS[Math.floor(Math.random() * RANDOM_DICE_SOUNDS.length)];
+  const audio = new Audio(source);
+  audio.volume = 0.55;
+  audio.play().catch(() => {});
+}
+
+function finishRandomRoll(overlay) {
+  overlay.classList.remove("is-rolling", "is-revealing");
+  overlay.hidden = true;
+}
+
+async function rollRandomManga() {
+  if (randomMangaRolling) return;
+  if (!state.manga.length) {
+    showToast("漫画收藏还是空的");
+    return;
+  }
+
+  randomMangaRolling = true;
+  elements.randomMangaButton.disabled = true;
+  elements.randomRollOverlay.hidden = false;
+  elements.randomRollOverlay.classList.remove("is-revealing");
+  void elements.randomRollOverlay.offsetWidth;
+  elements.randomRollOverlay.classList.add("is-rolling");
+  playRandomDiceSound();
+
+  const item = state.manga[Math.floor(Math.random() * state.manga.length)];
+  await new Promise((resolve) => setTimeout(resolve, 1550));
+  elements.randomRollOverlay.classList.add("is-revealing");
+  await new Promise((resolve) => setTimeout(resolve, 320));
+  finishRandomRoll(elements.randomRollOverlay);
+  openMangaDetail(item.id);
+  elements.randomMangaButton.disabled = false;
+  randomMangaRolling = false;
 }
 
 function openMangaEditor(id) {
@@ -1042,6 +1084,8 @@ function cycleMode() {
 }
 
 function bindEvents() {
+  elements.randomMangaButton.addEventListener("click", rollRandomManga);
+
   document.querySelectorAll(".nav-button").forEach((button) => {
     button.addEventListener("click", () => switchView(button.dataset.view));
   });

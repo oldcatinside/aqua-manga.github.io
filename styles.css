@@ -180,6 +180,205 @@ body:not(.manage-mode) .site-header {
   backdrop-filter: blur(12px);
 }
 
+.collection-tools {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.random-dice-button {
+  width: 38px;
+  height: 38px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  color: #6557a8;
+  border: 1px solid rgba(98, 84, 173, 0.13);
+  border-radius: 14px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.92), rgba(239, 248, 253, 0.84));
+  box-shadow: 0 8px 22px rgba(74, 62, 128, 0.1);
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  transition: transform 180ms ease, box-shadow 180ms ease, color 180ms ease;
+}
+
+.random-dice-button:hover {
+  color: #d56eaa;
+  transform: translateY(-2px) rotate(-3deg);
+  box-shadow: 0 11px 25px rgba(95, 76, 157, 0.17);
+}
+
+.random-dice-button:active {
+  transform: translateY(0) scale(0.94);
+}
+
+.random-dice-button:disabled {
+  cursor: wait;
+}
+
+.random-dice-button svg {
+  width: 31px;
+  height: 31px;
+  overflow: visible;
+}
+
+.random-dice-button .dice-cube {
+  fill: rgba(238, 232, 250, 0.9);
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linejoin: round;
+}
+
+.random-dice-button circle {
+  fill: currentColor;
+  stroke: none;
+}
+
+.random-dice-button .dice-spark {
+  fill: #69cce6;
+  stroke: none;
+}
+
+.random-dice-button .dice-spark-two {
+  fill: #ec91c1;
+}
+
+.random-roll-overlay[hidden] {
+  display: none;
+}
+
+.random-roll-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  color: #4a407f;
+  background: rgba(244, 247, 255, 0.7);
+  backdrop-filter: blur(13px) saturate(1.08);
+  opacity: 0;
+  pointer-events: all;
+}
+
+.random-roll-overlay.is-rolling {
+  animation: random-overlay-in 260ms ease forwards;
+}
+
+.random-roll-overlay.is-revealing {
+  animation: random-overlay-out 340ms ease forwards;
+}
+
+.random-roll-aura {
+  width: 150px;
+  height: 150px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(255, 255, 255, 0.95) 0 18%, rgba(105, 204, 230, 0.42) 38%, rgba(236, 145, 193, 0.25) 58%, transparent 72%);
+  transform: translate(-50%, -58%);
+  animation: random-aura 900ms ease-in-out infinite alternate;
+}
+
+.random-roll-die {
+  width: 68px;
+  height: 68px;
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  place-items: center;
+  padding: 12px;
+  border: 2px solid rgba(98, 84, 173, 0.32);
+  border-radius: 21px;
+  background: linear-gradient(145deg, #fff, #e9f8fc 48%, #f8e6f1);
+  box-shadow:
+    0 18px 42px rgba(64, 51, 118, 0.22),
+    inset 0 0 0 4px rgba(255, 255, 255, 0.6);
+  animation: random-die-roll 720ms cubic-bezier(.3, .8, .3, 1) infinite;
+}
+
+.random-roll-die::before,
+.random-roll-die::after {
+  content: "✦";
+  position: absolute;
+  color: #6bcde6;
+  font-size: 17px;
+  animation: random-spark 650ms ease-in-out infinite alternate;
+}
+
+.random-roll-die::before {
+  top: -25px;
+  right: -23px;
+}
+
+.random-roll-die::after {
+  bottom: -22px;
+  left: -25px;
+  color: #e783b9;
+  animation-delay: -320ms;
+}
+
+.random-roll-die span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(145deg, #60539f, #d675aa);
+  box-shadow: 0 2px 5px rgba(65, 52, 119, 0.2);
+}
+
+.random-roll-die span:nth-child(1) { grid-area: 1 / 1; }
+.random-roll-die span:nth-child(2) { grid-area: 1 / 3; }
+.random-roll-die span:nth-child(3) { grid-area: 2 / 2; }
+.random-roll-die span:nth-child(4) { grid-area: 3 / 1; }
+.random-roll-die span:nth-child(5) { grid-area: 3 / 3; }
+
+.random-roll-overlay p {
+  position: relative;
+  margin: 30px 0 5px;
+  font-family: Georgia, "STSong", "Songti SC", serif;
+  font-size: 15px;
+  letter-spacing: 0.08em;
+}
+
+.random-roll-overlay small {
+  position: relative;
+  color: #b36f9b;
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.22em;
+}
+
+@keyframes random-overlay-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes random-overlay-out {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(1.035); }
+}
+
+@keyframes random-die-roll {
+  0% { transform: translateY(8px) rotate(-14deg) scale(0.9); }
+  45% { transform: translateY(-11px) rotate(165deg) scale(1.05); }
+  100% { transform: translateY(8px) rotate(346deg) scale(0.9); }
+}
+
+@keyframes random-aura {
+  from { opacity: 0.72; transform: translate(-50%, -58%) scale(0.9); }
+  to { opacity: 1; transform: translate(-50%, -58%) scale(1.16); }
+}
+
+@keyframes random-spark {
+  from { opacity: 0.35; transform: scale(0.7) rotate(0); }
+  to { opacity: 1; transform: scale(1.15) rotate(25deg); }
+}
+
 .collection-counts div {
   display: flex;
   align-items: baseline;
@@ -2364,6 +2563,21 @@ dialog::backdrop {
     display: none;
   }
 
+  .collection-tools {
+    gap: 5px;
+  }
+
+  .random-dice-button {
+    width: 34px;
+    height: 34px;
+    border-radius: 12px;
+  }
+
+  .random-dice-button svg {
+    width: 27px;
+    height: 27px;
+  }
+
   .manage-button {
     padding: 10px 13px;
   }
@@ -2523,5 +2737,15 @@ dialog::backdrop {
     align-items: start;
     flex-direction: column;
     gap: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .random-roll-die,
+  .random-roll-aura,
+  .random-roll-die::before,
+  .random-roll-die::after {
+    animation-duration: 1ms;
+    animation-iteration-count: 1;
   }
 }

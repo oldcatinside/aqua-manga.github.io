@@ -2,6 +2,7 @@ const SECRET_DB_NAME = "aqua-secret-library";
 const SECRET_DB_VERSION = 1;
 const SECRET_HIDDEN_KEY = "aqua-secret-hidden-items";
 const SECRET_UNLOCK_KEY = "aqua-secret-unlocked";
+const SECRET_RANDOM_DICE_SOUNDS = ["assets/sfx/dice-1.mp3", "assets/sfx/dice-2.mp3"];
 const SECRET_MANAGE_MODE =
   location.protocol === "file:" || new URLSearchParams(location.search).get("manage") === "1";
 
@@ -35,7 +36,11 @@ const secretElements = {
   lockForm: document.querySelector("#secretLockForm"),
   lockError: document.querySelector("#secretLockError"),
   toast: document.querySelector("#secretToast"),
+  randomButton: document.querySelector("#randomSecretButton"),
+  randomOverlay: document.querySelector("#secretRandomRollOverlay"),
 };
+
+let secretRandomRolling = false;
 
 function readSecretHiddenIds() {
   try {
@@ -227,6 +232,40 @@ function openSecretDetail(id) {
     </div>
   `;
   if (!secretElements.detailDialog.open) secretElements.detailDialog.showModal();
+}
+
+function playSecretDiceSound() {
+  const source =
+    SECRET_RANDOM_DICE_SOUNDS[Math.floor(Math.random() * SECRET_RANDOM_DICE_SOUNDS.length)];
+  const audio = new Audio(source);
+  audio.volume = 0.55;
+  audio.play().catch(() => {});
+}
+
+async function rollRandomSecretBook() {
+  if (secretRandomRolling) return;
+  if (!secretState.books.length) {
+    secretToast("收藏还是空的");
+    return;
+  }
+
+  secretRandomRolling = true;
+  secretElements.randomButton.disabled = true;
+  secretElements.randomOverlay.hidden = false;
+  secretElements.randomOverlay.classList.remove("is-revealing");
+  void secretElements.randomOverlay.offsetWidth;
+  secretElements.randomOverlay.classList.add("is-rolling");
+  playSecretDiceSound();
+
+  const item = secretState.books[Math.floor(Math.random() * secretState.books.length)];
+  await new Promise((resolve) => setTimeout(resolve, 1550));
+  secretElements.randomOverlay.classList.add("is-revealing");
+  await new Promise((resolve) => setTimeout(resolve, 320));
+  secretElements.randomOverlay.classList.remove("is-rolling", "is-revealing");
+  secretElements.randomOverlay.hidden = true;
+  openSecretDetail(item.id);
+  secretElements.randomButton.disabled = false;
+  secretRandomRolling = false;
 }
 
 function switchSecretManager(view) {
@@ -581,6 +620,7 @@ function unlockSecretPage() {
 }
 
 function bindSecretEvents() {
+  secretElements.randomButton.addEventListener("click", rollRandomSecretBook);
   secretElements.search.addEventListener("input", renderSecretBooks);
   secretElements.grid.addEventListener("click", (event) => {
     const deleteButton = event.target.closest("[data-secret-delete]");

@@ -3,6 +3,13 @@ const SECRET_DB_VERSION = 1;
 const SECRET_HIDDEN_KEY = "aqua-secret-hidden-items";
 const SECRET_UNLOCK_KEY = "aqua-secret-unlocked";
 const SECRET_RANDOM_DICE_SOUNDS = ["assets/sfx/dice-1.mp3", "assets/sfx/dice-2.mp3"];
+const secretRandomDiceAudio = SECRET_RANDOM_DICE_SOUNDS.map((source) => {
+  const audio = new Audio(source);
+  audio.preload = "auto";
+  audio.volume = 0.55;
+  audio.load();
+  return audio;
+});
 const SECRET_MANAGE_MODE =
   location.protocol === "file:" || new URLSearchParams(location.search).get("manage") === "1";
 
@@ -235,11 +242,25 @@ function openSecretDetail(id) {
 }
 
 function playSecretDiceSound() {
-  const source =
-    SECRET_RANDOM_DICE_SOUNDS[Math.floor(Math.random() * SECRET_RANDOM_DICE_SOUNDS.length)];
-  const audio = new Audio(source);
-  audio.volume = 0.55;
+  const audio =
+    secretRandomDiceAudio[Math.floor(Math.random() * secretRandomDiceAudio.length)];
+  audio.pause();
+  audio.currentTime = 0;
   audio.play().catch(() => {});
+}
+
+function setSecretDieFace(value) {
+  const positions = {
+    1: ["center"],
+    2: ["top-left", "bottom-right"],
+    3: ["top-left", "center", "bottom-right"],
+    4: ["top-left", "top-right", "bottom-left", "bottom-right"],
+    5: ["top-left", "top-right", "center", "bottom-left", "bottom-right"],
+    6: ["top-left", "top-right", "middle-left", "middle-right", "bottom-left", "bottom-right"],
+  };
+  const die = secretElements.randomOverlay.querySelector(".random-roll-die");
+  die.innerHTML = positions[value].map((position) => `<span class="${position}"></span>`).join("");
+  die.dataset.value = value;
 }
 
 async function rollRandomSecretBook() {
@@ -251,14 +272,21 @@ async function rollRandomSecretBook() {
 
   secretRandomRolling = true;
   secretElements.randomButton.disabled = true;
+  playSecretDiceSound();
   secretElements.randomOverlay.hidden = false;
   secretElements.randomOverlay.classList.remove("is-revealing");
+  setSecretDieFace(Math.floor(Math.random() * 6) + 1);
   void secretElements.randomOverlay.offsetWidth;
   secretElements.randomOverlay.classList.add("is-rolling");
-  playSecretDiceSound();
 
   const item = secretState.books[Math.floor(Math.random() * secretState.books.length)];
-  await new Promise((resolve) => setTimeout(resolve, 1550));
+  const faceTimer = setInterval(() => {
+    setSecretDieFace(Math.floor(Math.random() * 6) + 1);
+  }, 115);
+  await new Promise((resolve) => setTimeout(resolve, 1450));
+  clearInterval(faceTimer);
+  setSecretDieFace(Math.floor(Math.random() * 6) + 1);
+  await new Promise((resolve) => setTimeout(resolve, 180));
   secretElements.randomOverlay.classList.add("is-revealing");
   await new Promise((resolve) => setTimeout(resolve, 320));
   secretElements.randomOverlay.classList.remove("is-rolling", "is-revealing");

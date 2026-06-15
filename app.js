@@ -3,6 +3,13 @@ const DB_VERSION = 1;
 const HIDDEN_ITEMS_KEY = "aqua-manga-hidden-items";
 const PLAYER_THEME_KEY = "aqua-manga-player-theme";
 const RANDOM_DICE_SOUNDS = ["assets/sfx/dice-1.mp3", "assets/sfx/dice-2.mp3"];
+const randomDiceAudio = RANDOM_DICE_SOUNDS.map((source) => {
+  const audio = new Audio(source);
+  audio.preload = "auto";
+  audio.volume = 0.55;
+  audio.load();
+  return audio;
+});
 const IS_MANAGE_MODE =
   location.protocol === "file:" || new URLSearchParams(location.search).get("manage") === "1";
 
@@ -345,10 +352,24 @@ function openMangaDetail(id) {
 }
 
 function playRandomDiceSound() {
-  const source = RANDOM_DICE_SOUNDS[Math.floor(Math.random() * RANDOM_DICE_SOUNDS.length)];
-  const audio = new Audio(source);
-  audio.volume = 0.55;
+  const audio = randomDiceAudio[Math.floor(Math.random() * randomDiceAudio.length)];
+  audio.pause();
+  audio.currentTime = 0;
   audio.play().catch(() => {});
+}
+
+function setRandomDieFace(overlay, value) {
+  const positions = {
+    1: ["center"],
+    2: ["top-left", "bottom-right"],
+    3: ["top-left", "center", "bottom-right"],
+    4: ["top-left", "top-right", "bottom-left", "bottom-right"],
+    5: ["top-left", "top-right", "center", "bottom-left", "bottom-right"],
+    6: ["top-left", "top-right", "middle-left", "middle-right", "bottom-left", "bottom-right"],
+  };
+  const die = overlay.querySelector(".random-roll-die");
+  die.innerHTML = positions[value].map((position) => `<span class="${position}"></span>`).join("");
+  die.dataset.value = value;
 }
 
 function finishRandomRoll(overlay) {
@@ -365,14 +386,21 @@ async function rollRandomManga() {
 
   randomMangaRolling = true;
   elements.randomMangaButton.disabled = true;
+  playRandomDiceSound();
   elements.randomRollOverlay.hidden = false;
   elements.randomRollOverlay.classList.remove("is-revealing");
+  setRandomDieFace(elements.randomRollOverlay, Math.floor(Math.random() * 6) + 1);
   void elements.randomRollOverlay.offsetWidth;
   elements.randomRollOverlay.classList.add("is-rolling");
-  playRandomDiceSound();
 
   const item = state.manga[Math.floor(Math.random() * state.manga.length)];
-  await new Promise((resolve) => setTimeout(resolve, 1550));
+  const faceTimer = setInterval(() => {
+    setRandomDieFace(elements.randomRollOverlay, Math.floor(Math.random() * 6) + 1);
+  }, 115);
+  await new Promise((resolve) => setTimeout(resolve, 1450));
+  clearInterval(faceTimer);
+  setRandomDieFace(elements.randomRollOverlay, Math.floor(Math.random() * 6) + 1);
+  await new Promise((resolve) => setTimeout(resolve, 180));
   elements.randomRollOverlay.classList.add("is-revealing");
   await new Promise((resolve) => setTimeout(resolve, 320));
   finishRandomRoll(elements.randomRollOverlay);

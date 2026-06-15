@@ -1,7 +1,19 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-15T04:26:13.528Z",
+  "generatedAt": "2026-06-15T13:25:11.778Z",
   "manga": [
+    {
+      "id": "manga-a4fb64a6-c662-4710-8535-11816fe8f09c",
+      "title": "看得见的女孩",
+      "author": "泉朝树",
+      "genre": "悬疑",
+      "quote": "“看见了也不能承认，看不见才是活下去的办法。”",
+      "description": "突然有一天，女高中生见子似乎变得能看见普通人看不见的“不太好”的诡异身影了。\r\n然而她既没有选择逃离他们，也没有选择直面他们……而是选择一次又一次地无视他们。\r\n“看得见”的她的紧张日常，正缓缓拉开帷幕...",
+      "coverTheme": "",
+      "images": [
+        "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/manga/%E7%9C%8B%E5%BE%97%E8%A7%81%E7%9A%84%E5%A5%B3%E5%AD%A9-4d6c1809-01.webp"
+      ]
+    },
     {
       "id": "manga-40a1f2b1-4c31-40d3-9def-0ce551c95255",
       "title": "气绝勇者与暗杀公主",

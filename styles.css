@@ -863,6 +863,87 @@ main {
   gap: 22px;
 }
 
+.manga-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 13px;
+  margin-top: 34px;
+}
+
+.manga-pagination[hidden] {
+  display: none;
+}
+
+.pagination-range {
+  color: #9594a8;
+  font-family: Georgia, serif;
+  font-size: 10px;
+  letter-spacing: 0.06em;
+}
+
+.pagination-range i {
+  margin: 0 3px;
+  color: #d5ccdf;
+  font-style: normal;
+}
+
+.pagination-controls {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 5px;
+  border: 1px solid rgba(98, 84, 173, 0.12);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 9px 25px rgba(61, 69, 110, 0.07);
+  backdrop-filter: blur(12px);
+}
+
+.pagination-controls button {
+  width: 31px;
+  height: 31px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  color: #78768e;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  cursor: pointer;
+  font-family: Georgia, serif;
+  font-size: 11px;
+  transition: 160ms ease;
+}
+
+.pagination-controls button:hover:not(:disabled):not(.active) {
+  color: var(--blue-deep);
+  background: var(--blue-soft);
+}
+
+.pagination-controls button.active {
+  color: white;
+  background: linear-gradient(145deg, #6557ad, #d979ae);
+  box-shadow: 0 6px 14px rgba(103, 79, 161, 0.23);
+}
+
+.pagination-controls button:disabled {
+  color: #cbc9d4;
+  cursor: default;
+}
+
+.pagination-arrow svg {
+  width: 14px;
+}
+
+.pagination-ellipsis {
+  width: 23px;
+  color: #aaa7b7;
+  text-align: center;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+}
+
 .manga-card {
   min-width: 0;
   position: relative;
@@ -2610,6 +2691,20 @@ dialog::backdrop {
   .manga-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 18px 13px;
+  }
+
+  .manga-pagination {
+    gap: 8px;
+    margin-top: 27px;
+  }
+
+  .pagination-range {
+    display: none;
+  }
+
+  .pagination-controls {
+    max-width: 100%;
+    overflow-x: auto;
   }
 
   .manga-info h3 {

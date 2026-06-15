@@ -2,6 +2,7 @@ const DB_NAME = "aqua-manga-library";
 const DB_VERSION = 1;
 const HIDDEN_ITEMS_KEY = "aqua-manga-hidden-items";
 const PLAYER_THEME_KEY = "aqua-manga-player-theme";
+const MANGA_PAGE_SIZE = 8;
 const RANDOM_DICE_SOUNDS = ["assets/sfx/dice-1.mp3", "assets/sfx/dice-2.mp3"];
 const randomDiceAudio = RANDOM_DICE_SOUNDS.map((source) => {
   const audio = new Audio(source);
@@ -25,6 +26,7 @@ function readHiddenIds() {
 const state = {
   manga: [],
   music: [],
+  mangaPage: 1,
   currentTrackIndex: -1,
   mode: "sequence",
   playerTheme: localStorage.getItem(PLAYER_THEME_KEY) || "navy",
@@ -40,6 +42,7 @@ const elements = {
   mangaGrid: document.querySelector("#mangaGrid"),
   musicList: document.querySelector("#musicList"),
   mangaEmpty: document.querySelector("#mangaEmpty"),
+  mangaPagination: document.querySelector("#mangaPagination"),
   musicEmpty: document.querySelector("#musicEmpty"),
   mangaSearch: document.querySelector("#mangaSearch"),
   musicSearch: document.querySelector("#musicSearch"),
@@ -220,6 +223,59 @@ function updateCounts() {
   elements.musicCount.textContent = state.music.length;
 }
 
+function mangaPaginationItems(currentPage, totalPages) {
+  if (totalPages <= 5) {
+    return Array.from({ length: totalPages }, (_, index) => index + 1);
+  }
+
+  const pages = [...new Set([1, currentPage - 1, currentPage, currentPage + 1, totalPages])]
+    .filter((page) => page >= 1 && page <= totalPages)
+    .sort((a, b) => a - b);
+  const items = [];
+
+  pages.forEach((page, index) => {
+    if (index > 0 && page - pages[index - 1] > 1) items.push("ellipsis");
+    items.push(page);
+  });
+  return items;
+}
+
+function renderMangaPagination(totalItems, totalPages) {
+  if (totalItems <= MANGA_PAGE_SIZE) {
+    elements.mangaPagination.hidden = true;
+    elements.mangaPagination.innerHTML = "";
+    return;
+  }
+
+  const start = (state.mangaPage - 1) * MANGA_PAGE_SIZE + 1;
+  const end = Math.min(state.mangaPage * MANGA_PAGE_SIZE, totalItems);
+  const pages = mangaPaginationItems(state.mangaPage, totalPages);
+  const arrow = (direction) =>
+    direction === "previous"
+      ? '<svg viewBox="0 0 24 24"><path d="m15 18-6-6 6-6" /></svg>'
+      : '<svg viewBox="0 0 24 24"><path d="m9 6 6 6-6 6" /></svg>';
+
+  elements.mangaPagination.hidden = false;
+  elements.mangaPagination.innerHTML = `
+    <span class="pagination-range">${start}–${end} <i>/</i> ${totalItems}</span>
+    <div class="pagination-controls">
+      <button class="pagination-arrow" data-manga-page="${state.mangaPage - 1}" type="button"
+        aria-label="上一页" ${state.mangaPage === 1 ? "disabled" : ""}>${arrow("previous")}</button>
+      ${pages
+        .map((page) =>
+          page === "ellipsis"
+            ? '<span class="pagination-ellipsis" aria-hidden="true">···</span>'
+            : `<button class="pagination-page${page === state.mangaPage ? " active" : ""}"
+                data-manga-page="${page}" type="button"
+                aria-label="第 ${page} 页" ${page === state.mangaPage ? 'aria-current="page"' : ""}>${page}</button>`,
+        )
+        .join("")}
+      <button class="pagination-arrow" data-manga-page="${state.mangaPage + 1}" type="button"
+        aria-label="下一页" ${state.mangaPage === totalPages ? "disabled" : ""}>${arrow("next")}</button>
+    </div>
+  `;
+}
+
 function renderManga() {
   const query = elements.mangaSearch.value.trim().toLocaleLowerCase();
   const filtered = state.manga.filter((item) => {
@@ -228,8 +284,12 @@ function renderManga() {
       .toLocaleLowerCase()
       .includes(query);
   });
+  const totalPages = Math.max(1, Math.ceil(filtered.length / MANGA_PAGE_SIZE));
+  state.mangaPage = Math.min(Math.max(state.mangaPage, 1), totalPages);
+  const pageStart = (state.mangaPage - 1) * MANGA_PAGE_SIZE;
+  const pageItems = filtered.slice(pageStart, pageStart + MANGA_PAGE_SIZE);
 
-  elements.mangaGrid.innerHTML = filtered
+  elements.mangaGrid.innerHTML = pageItems
     .map((item, index) => {
       const actualIndex = state.manga.findIndex((entry) => entry.id === item.id);
       return `
@@ -256,6 +316,7 @@ function renderManga() {
     .join("");
 
   elements.mangaEmpty.hidden = filtered.length > 0;
+  renderMangaPagination(filtered.length, totalPages);
 }
 
 function renderMusic() {
@@ -910,6 +971,7 @@ async function submitManga(event) {
     };
     await saveItem("manga", item);
     state.manga.unshift(item);
+    state.mangaPage = 1;
     form.reset();
     document.querySelector("#mangaFileStatus").textContent = "支持 JPG、PNG、WEBP";
     renderAll();
@@ -1183,8 +1245,19 @@ function bindEvents() {
     location.href = `secret.html${IS_MANAGE_MODE ? "?manage=1" : ""}`;
   });
 
-  elements.mangaSearch.addEventListener("input", renderManga);
+  elements.mangaSearch.addEventListener("input", () => {
+    state.mangaPage = 1;
+    renderManga();
+  });
   elements.musicSearch.addEventListener("input", renderMusic);
+
+  elements.mangaPagination.addEventListener("click", (event) => {
+    const button = event.target.closest("[data-manga-page]");
+    if (!button || button.disabled) return;
+    state.mangaPage = Number(button.dataset.mangaPage);
+    renderManga();
+    elements.mangaGrid.scrollIntoView({ behavior: "smooth", block: "start" });
+  });
 
   elements.mangaGrid.addEventListener("click", (event) => {
     const deleteButton = event.target.closest("[data-delete-id]");

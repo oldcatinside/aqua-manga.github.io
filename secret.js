@@ -263,6 +263,22 @@ function setSecretDieFace(value) {
   die.dataset.value = value;
 }
 
+async function animateSecretDieFaces() {
+  const delays = [150, 190, 240, 310, 390];
+  let current =
+    Number(secretElements.randomOverlay.querySelector(".random-roll-die").dataset.value) || 1;
+
+  for (const delay of delays) {
+    await new Promise((resolve) => setTimeout(resolve, delay));
+    let next = Math.floor(Math.random() * 6) + 1;
+    if (next === current) next = (next % 6) + 1;
+    current = next;
+    setSecretDieFace(current);
+  }
+
+  await new Promise((resolve) => setTimeout(resolve, 320));
+}
+
 async function rollRandomSecretBook() {
   if (secretRandomRolling) return;
   if (!secretState.books.length) {
@@ -280,13 +296,7 @@ async function rollRandomSecretBook() {
   secretElements.randomOverlay.classList.add("is-rolling");
 
   const item = secretState.books[Math.floor(Math.random() * secretState.books.length)];
-  const faceTimer = setInterval(() => {
-    setSecretDieFace(Math.floor(Math.random() * 6) + 1);
-  }, 115);
-  await new Promise((resolve) => setTimeout(resolve, 1450));
-  clearInterval(faceTimer);
-  setSecretDieFace(Math.floor(Math.random() * 6) + 1);
-  await new Promise((resolve) => setTimeout(resolve, 180));
+  await animateSecretDieFaces();
   secretElements.randomOverlay.classList.add("is-revealing");
   await new Promise((resolve) => setTimeout(resolve, 320));
   secretElements.randomOverlay.classList.remove("is-rolling", "is-revealing");

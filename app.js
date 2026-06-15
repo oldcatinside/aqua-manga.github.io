@@ -372,6 +372,21 @@ function setRandomDieFace(overlay, value) {
   die.dataset.value = value;
 }
 
+async function animateRandomDieFaces(overlay) {
+  const delays = [150, 190, 240, 310, 390];
+  let current = Number(overlay.querySelector(".random-roll-die").dataset.value) || 1;
+
+  for (const delay of delays) {
+    await new Promise((resolve) => setTimeout(resolve, delay));
+    let next = Math.floor(Math.random() * 6) + 1;
+    if (next === current) next = (next % 6) + 1;
+    current = next;
+    setRandomDieFace(overlay, current);
+  }
+
+  await new Promise((resolve) => setTimeout(resolve, 320));
+}
+
 function finishRandomRoll(overlay) {
   overlay.classList.remove("is-rolling", "is-revealing");
   overlay.hidden = true;
@@ -394,13 +409,7 @@ async function rollRandomManga() {
   elements.randomRollOverlay.classList.add("is-rolling");
 
   const item = state.manga[Math.floor(Math.random() * state.manga.length)];
-  const faceTimer = setInterval(() => {
-    setRandomDieFace(elements.randomRollOverlay, Math.floor(Math.random() * 6) + 1);
-  }, 115);
-  await new Promise((resolve) => setTimeout(resolve, 1450));
-  clearInterval(faceTimer);
-  setRandomDieFace(elements.randomRollOverlay, Math.floor(Math.random() * 6) + 1);
-  await new Promise((resolve) => setTimeout(resolve, 180));
+  await animateRandomDieFaces(elements.randomRollOverlay);
   elements.randomRollOverlay.classList.add("is-revealing");
   await new Promise((resolve) => setTimeout(resolve, 320));
   finishRandomRoll(elements.randomRollOverlay);

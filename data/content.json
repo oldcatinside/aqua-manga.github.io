@@ -1,7 +1,31 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-13T15:43:26.690Z",
+  "generatedAt": "2026-06-15T04:26:13.528Z",
   "manga": [
+    {
+      "id": "manga-40a1f2b1-4c31-40d3-9def-0ce551c95255",
+      "title": "气绝勇者与暗杀公主",
+      "author": "のりしろちゃん",
+      "genre": "恋爱",
+      "quote": "“他满怀干劲地踏上旅途，而她们却满怀‘杀’劲。”",
+      "description": "勇者托特虽然实力强劲，但是极度社恐因而从来无法组队，更别谈冒险了。面对这样的他，谢尔、阿内莫涅、戈雅三位美女竟然提出要跟他组队！然而，她们的目的却是勇者的性命……！？\n\n为了打倒最强的勇者，三位暗杀公主的战火挑起了！！",
+      "coverTheme": "",
+      "images": [
+        "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/manga/%E6%B0%94%E7%BB%9D%E5%8B%87%E8%80%85%E4%B8%8E%E6%9A%97%E6%9D%80%E5%85%AC%E4%B8%BB.png"
+      ]
+    },
+    {
+      "id": "manga-43b9cf02-42d5-4853-bd5c-9f52c67ca1ea",
+      "title": "异世界舅舅",
+      "author": "殆ど死んでいる",
+      "genre": "异世界",
+      "quote": "“在异世界归来的，不是勇者，而是一个满脑子世嘉的舅舅。”",
+      "description": "2017年秋季。外甥敬文探访医院，见到了从17年的昏迷状态中苏醒过来的舅舅，并目睹舅舅使出了令人惊异的魔法。意识到舅舅真的会使用魔法，敬文建议他利用自己的能力以YouTuber的身份谋生。\n\n开始与成为 YouTuber 的舅舅同住一个房间的敬文，偶尔会从他那里听到关于异世界生活的故事，但这是一个与通常的“异世界故事”不同的孤独而壮观的 17 年故事。",
+      "coverTheme": "",
+      "images": [
+        "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/manga/%E5%BC%82%E4%B8%96%E7%95%8C%E8%88%85%E8%88%85.png"
+      ]
+    },
     {
       "id": "manga-0c7fbdbb-76f8-4b62-89b9-c95180fa2f66",
       "title": "以暗杀技能成为异世界最强 ～精通炼金术与暗杀术的我在暗中支配世界～",
@@ -84,6 +108,30 @@
       "coverTheme": "",
       "images": [
         "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/manga/%E8%84%91%E6%B4%9E%E5%AD%A6%E7%94%9F%E4%BC%9A.png"
+      ]
+    },
+    {
+      "id": "manga-466510e2-64be-42e3-a76f-f30ce04e17a6",
+      "title": "被卷入了勇者召唤事件却发现异世界很和平",
+      "author": "平安ジロー",
+      "genre": "异世界",
+      "quote": "“异世界是——和平的。”",
+      "description": "在和平的异世界中悠哉&恩爱生活，START！！\n\n在大学的回家路上，和等红绿灯的高中生一起被传送到异世界的快人。\n看上去是被卷入勇者召唤了。接下来的展开是要和魔王战斗？！\n虽然快人这么想，其实所谓勇者只是节日的主角。\n要回到原来的世界得一年后，在和平的异世界悠哉度日的快人，\n与拥有着不可思议的魅力的魔族少女克罗姆艾娜相遇了……",
+      "coverTheme": "",
+      "images": [
+        "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/manga/%E8%A2%AB%E5%8D%B7%E5%85%A5%E4%BA%86%E5%8B%87%E8%80%85%E5%8F%AC%E5%94%A4%E4%BA%8B%E4%BB%B6%E5%8D%B4%E5%8F%91%E7%8E%B0%E5%BC%82%E4%B8%96%E7%95%8C%E5%BE%88%E5%92%8C%E5%B9%B3.jpg"
+      ]
+    },
+    {
+      "id": "manga-696b76d8-d8d5-4c02-b9d2-8d4f6acf02aa",
+      "title": "事到如今，喜欢上了青梅竹马",
+      "author": "丸户史明",
+      "genre": "恋爱",
+      "quote": "“事到如今做那种事有什么意义？要偷看的话初中就该偷看了。”",
+      "description": "和タ~君是相识10年的青梅竹马。\n这是心境过于相近，\n距离感太近以至于不会误会，\n也不会有莫名其妙的关系，非常绝妙的童年玩伴的关系……\n\n「怎、怎么可能啊啊啊啊~！！」\n\n明明在他的房间里不经意地贴着他的背，\n明明特意调整了上学时间装作意外相遇，\n可因为一直待在一起，他都已经麻木了，\n不管怎样都徒劳无功！到底该怎么办才好！？\n\n啊，不过，他说没人向他告白过。\n也就是说，还有希望的吧？\n和タ~君，能成为恋人的吧……？\n\n白坂阳花梨，16岁……。\n\n事到如今，喜欢上了青梅竹马。",
+      "coverTheme": "",
+      "images": [
+        "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/manga/%E4%BA%8B%E5%88%B0%E5%A6%82%E4%BB%8A%EF%BC%8C%E5%96%9C%E6%AC%A2%E4%B8%8A%E4%BA%86%E9%9D%92%E6%A2%85%E7%AB%B9%E9%A9%AC.jpg"
       ]
     }
   ],

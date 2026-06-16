@@ -1,7 +1,43 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-15T13:37:37.549Z",
+  "generatedAt": "2026-06-16T09:49:45.893Z",
   "manga": [
+    {
+      "id": "manga-443f7d41-b36b-4f86-920d-5184cb623c3d",
+      "title": "婚姻剧毒",
+      "author": "依田瑞稀",
+      "genre": "恋爱",
+      "quote": "“要结婚，就必须先活下来。”",
+      "description": "干着持续了数百年的杀手行当“用毒人”的青年：下吕。\r\n对于干着暗中的工作，不擅长应对女性的他来说结婚并不是必须要做的东西。\r\n然而，为了不让“用毒人”的血脉断绝，老家通知他的妹妹要强制让她生下继承人。\r\n就在这时，下吕遇见了身为曾为其工作目标的骗婚师：城崎……？！\r\n\r\n“——这样的提案（求婚），还是第一次”\r\n\r\n让骗婚师当顾问的杀手结婚活动开始了！\r\n目标是最棒的结婚……世界第一困难的结婚活动战斗动作剧！！",
+      "coverTheme": "",
+      "images": [
+        "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/manga/%E5%A9%9A%E5%A7%BB%E5%89%A7%E6%AF%92-daf07533-01.webp"
+      ]
+    },
+    {
+      "id": "manga-37da116f-4d64-47b5-9043-c774305d0b1d",
+      "title": "黑暗召唤师在地下恋爱中",
+      "author": "車王",
+      "genre": "恋爱",
+      "quote": "“我明明是圣职者，却和暗黑召唤师交往了。”",
+      "description": "自一夜过后开始的奇幻恋爱喜剧♥",
+      "coverTheme": "",
+      "images": [
+        "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/manga/%E9%BB%91%E6%9A%97%E5%8F%AC%E5%94%A4%E5%B8%88%E5%9C%A8%E5%9C%B0%E4%B8%8B%E6%81%8B%E7%88%B1%E4%B8%AD-8741d26f-01.webp"
+      ]
+    },
+    {
+      "id": "manga-41a4ff5c-56a2-4bac-9d1b-c62b1a8ccf1e",
+      "title": "想让败犬反败为胜！！",
+      "author": "那珂山みちる",
+      "genre": "恋爱",
+      "quote": "“这一次，我要让败犬女主赢到最后。”",
+      "description": "从败犬到赢家！路人主角挺身引路，为纯情女主人公加油应援的恋爱喜剧！",
+      "coverTheme": "",
+      "images": [
+        "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/manga/%E6%83%B3%E8%AE%A9%E8%B4%A5%E7%8A%AC%E5%8F%8D%E8%B4%A5%E4%B8%BA%E8%83%9C%EF%BC%81%EF%BC%81-22c1a6d0-01.webp"
+      ]
+    },
     {
       "id": "manga-73b6f4ba-6bf3-4343-8691-98d85f42e6bc",
       "title": "午夜的倾心旋律",
@@ -172,6 +208,17 @@
     }
   ],
   "music": [
+    {
+      "id": "music-8600c608-564c-4315-8db8-7a9c6b55a27c",
+      "title": "五等分のカタチ",
+      "artist": "中野家の五つ子",
+      "album": "爱",
+      "duration": 243.77469387755102,
+      "coverTheme": "",
+      "demo": false,
+      "cover": "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/music/pic/%E4%B8%AD%E9%87%8E%E5%AE%B6%E3%81%AE%E4%BA%94%E3%81%A4%E5%AD%90%20-%20%E4%BA%94%E7%AD%89%E5%88%86%E3%81%AE%E3%82%AB%E3%82%BF%E3%83%81-c2bfa81b.webp",
+      "audio": "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/music/mp3/%E4%B8%AD%E9%87%8E%E5%AE%B6%E3%81%AE%E4%BA%94%E3%81%A4%E5%AD%90%20-%20%E4%BA%94%E7%AD%89%E5%88%86%E3%81%AE%E3%82%AB%E3%82%BF%E3%83%81-c2bfa81b.mp3"
+    },
     {
       "id": "music-6c12468f-8401-4e9a-8d62-0b915d95a6fe",
       "title": "花占い",

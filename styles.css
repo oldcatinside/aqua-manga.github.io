@@ -863,15 +863,41 @@ main {
   gap: 22px;
 }
 
+#mangaView.has-featured {
+  display: grid;
+  grid-template-columns: minmax(250px, 300px) minmax(0, 1fr);
+  gap: 26px;
+  align-items: start;
+}
+
+#mangaView.has-featured .section-heading {
+  grid-column: 1 / -1;
+  width: 100%;
+}
+
+#mangaView.has-featured .manga-grid,
+#mangaView.has-featured .empty-state,
+#mangaView.has-featured .manga-pagination {
+  grid-column: 2;
+}
+
+#mangaView.has-featured .manga-grid {
+  grid-template-columns: repeat(3, 1fr);
+}
+
 .featured-manga {
   display: grid;
-  grid-template-columns: minmax(180px, 0.72fr) minmax(0, 1.7fr);
-  align-items: stretch;
-  gap: 16px;
-  margin: 8px 0 26px;
-  padding: 16px;
+  grid-template-columns: 1fr;
+  align-items: start;
+  gap: 14px;
+  grid-column: 1;
+  grid-row: 2 / span 3;
+  position: sticky;
+  top: 92px;
+  margin: 0;
+  padding: 18px;
   border: 1px solid rgba(98, 84, 173, 0.1);
-  border-radius: 24px;
+  border-radius: 26px;
   background:
     radial-gradient(circle at 8% 0, rgba(102, 203, 229, 0.22), transparent 35%),
     radial-gradient(circle at 100% 70%, rgba(231, 130, 183, 0.2), transparent 36%),
@@ -885,11 +911,11 @@ main {
 }
 
 .featured-copy {
-  min-height: 112px;
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  padding: 4px 10px;
+  justify-content: flex-start;
+  padding: 3px 2px 0;
 }
 
 .featured-copy p {
@@ -903,7 +929,7 @@ main {
 .featured-copy h3 {
   margin: 0 0 7px;
   font-family: Georgia, "STSong", "Songti SC", serif;
-  font-size: 25px;
+  font-size: 27px;
   font-weight: 500;
 }
 
@@ -916,17 +942,17 @@ main {
 
 .featured-list {
   display: grid;
-  grid-template-columns: minmax(260px, 1fr);
+  grid-template-columns: 1fr;
   gap: 10px;
 }
 
 .featured-card {
   min-width: 0;
   display: grid;
-  grid-template-columns: 82px minmax(0, 1fr);
-  align-items: center;
-  gap: 11px;
-  padding: 10px;
+  grid-template-columns: 1fr;
+  align-items: start;
+  gap: 13px;
+  padding: 12px;
   color: inherit;
   text-align: left;
   border: 1px solid rgba(98, 84, 173, 0.1);
@@ -943,20 +969,23 @@ main {
 }
 
 .featured-thumb {
-  width: 82px;
-  height: 106px;
+  width: 100%;
+  height: 340px;
+  position: relative;
   overflow: hidden;
-  border: 2px solid white;
-  border-radius: 14px;
-  background: var(--blue-soft);
-  box-shadow: 0 8px 18px rgba(56, 68, 110, 0.1);
+  border: 3px solid white;
+  border-radius: 18px;
+  background:
+    linear-gradient(135deg, rgba(102, 203, 229, 0.18), rgba(231, 130, 183, 0.16)),
+    var(--blue-soft);
+  box-shadow: 0 14px 30px rgba(56, 68, 110, 0.14);
 }
 
 .featured-thumb img {
   width: 100%;
   height: 100%;
   display: block;
-  object-fit: cover;
+  object-fit: contain;
 }
 
 .featured-card-copy {
@@ -975,7 +1004,7 @@ main {
 .featured-card-copy strong {
   margin-bottom: 6px;
   font-family: Georgia, "STSong", "Songti SC", serif;
-  font-size: 15px;
+  font-size: 18px;
 }
 
 .featured-card-copy small {
@@ -986,26 +1015,59 @@ main {
 .rating-stars {
   display: inline-flex;
   align-items: center;
-  gap: 2px;
-  color: #d8d5e1;
-  font-size: 12px;
+  gap: 3px;
+  color: #d7d3df;
+  font-family: Georgia, serif;
+  font-size: 14px;
   letter-spacing: 0.03em;
 }
 
+.rating-stars span {
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+}
+
 .rating-stars .filled {
-  color: var(--pink);
-  text-shadow: 0 2px 8px rgba(231, 130, 183, 0.34);
+  color: #ff77b7;
+  text-shadow: 0 2px 9px rgba(231, 130, 183, 0.46);
+}
+
+.rating-stars .half {
+  color: #d7d3df;
+}
+
+.rating-stars .half::before {
+  content: "\2605";
+  width: 50%;
+  position: absolute;
+  inset: 0 auto 0 0;
+  overflow: hidden;
+  color: #ff77b7;
+  text-shadow: 0 2px 9px rgba(231, 130, 183, 0.46);
+}
+
+.rating-stars b {
+  margin-left: 4px;
+  padding: 1px 6px;
+  color: #6557ad;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.76);
+  font-size: 10px;
+  font-weight: 700;
 }
 
 .card-rating {
   margin: -2px 0 8px;
-  padding: 3px 7px;
+  padding: 4px 8px;
   border-radius: 999px;
-  background: linear-gradient(90deg, rgba(102, 203, 229, 0.12), rgba(231, 130, 183, 0.12));
+  background: linear-gradient(90deg, rgba(102, 203, 229, 0.18), rgba(231, 130, 183, 0.2));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.72);
 }
 
 .featured-rating {
   margin-top: 8px;
+  font-size: 16px;
 }
 
 .manga-pagination {
@@ -2186,10 +2248,11 @@ dialog::backdrop {
 
 .detail-rating {
   margin: 0 0 12px;
-  padding: 5px 10px;
+  padding: 7px 12px;
   border-radius: 999px;
-  background: linear-gradient(90deg, rgba(102, 203, 229, 0.12), rgba(231, 130, 183, 0.14));
-  font-size: 14px;
+  background: linear-gradient(90deg, rgba(102, 203, 229, 0.18), rgba(231, 130, 183, 0.2));
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.72);
+  font-size: 16px;
 }
 
 .detail-author {
@@ -2228,15 +2291,27 @@ dialog::backdrop {
 
 .recommend-reason {
   margin-top: 24px;
-  padding: 20px 22px;
-  border: 1px solid rgba(98, 84, 173, 0.1);
-  border-radius: 20px;
+  padding: 22px 24px;
+  border: 1px solid rgba(231, 130, 183, 0.22);
+  border-left: 4px solid var(--pink);
+  border-radius: 22px;
   background:
-    linear-gradient(135deg, rgba(231, 130, 183, 0.12), rgba(102, 203, 229, 0.08)),
-    rgba(255, 255, 255, 0.72);
+    radial-gradient(circle at 100% 0, rgba(102, 203, 229, 0.16), transparent 36%),
+    linear-gradient(135deg, rgba(255, 232, 244, 0.86), rgba(239, 249, 253, 0.82));
+  box-shadow: 0 14px 28px rgba(78, 74, 118, 0.07);
 }
 
-.recommend-reason h3,
+.recommend-reason h3 {
+  margin: 0 0 11px;
+  display: inline-flex;
+  padding: 5px 11px;
+  color: #fff;
+  border-radius: 999px;
+  background: linear-gradient(100deg, var(--blue-deep), var(--pink));
+  font-size: 11px;
+  letter-spacing: 0.1em;
+}
+
 .favorite-scene h3 {
   margin: 0 0 11px;
   color: var(--ink);
@@ -2246,9 +2321,9 @@ dialog::backdrop {
 
 .recommend-reason p {
   margin: 0;
-  color: #65697e;
-  font-size: 13px;
-  line-height: 1.9;
+  color: #4d5169;
+  font-size: 13.5px;
+  line-height: 2;
   white-space: pre-line;
 }
 
@@ -2866,12 +2941,26 @@ dialog::backdrop {
     grid-template-columns: repeat(3, 1fr);
   }
 
+  #mangaView.has-featured {
+    display: block;
+  }
+
+  #mangaView.has-featured .manga-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
   .featured-manga {
     grid-template-columns: 1fr;
+    position: static;
+    margin: 8px 0 26px;
   }
 
   .featured-list {
     grid-template-columns: 1fr;
+  }
+
+  .featured-thumb {
+    height: 260px;
   }
 
   .player {
@@ -2965,6 +3054,10 @@ dialog::backdrop {
 
   .featured-list {
     grid-template-columns: 1fr;
+  }
+
+  .featured-thumb {
+    height: 220px;
   }
 
   .favorite-scene {

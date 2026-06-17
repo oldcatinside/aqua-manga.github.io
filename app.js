@@ -187,16 +187,18 @@ function detailCoverMarkup(item) {
 function normalizeRating(value) {
   const rating = Number(value);
   if (!Number.isFinite(rating)) return 0;
-  return Math.min(5, Math.max(0, Math.round(rating)));
+  return Math.min(5, Math.max(0, Math.round(rating * 2) / 2));
 }
 
 function ratingMarkup(item, className = "") {
   const rating = normalizeRating(item.rating);
   if (!rating) return "";
-  const stars = Array.from({ length: 5 }, (_, index) =>
-    `<span class="${index < rating ? "filled" : ""}">&#9733;</span>`,
-  ).join("");
-  return `<div class="rating-stars ${className}" aria-label="推荐等级 ${rating} 星">${stars}</div>`;
+  const stars = Array.from({ length: 5 }, (_, index) => {
+    const value = index + 1;
+    const starClass = rating >= value ? "filled" : rating >= value - 0.5 ? "half" : "";
+    return `<span class="${starClass}">&#9733;</span>`;
+  }).join("");
+  return `<div class="rating-stars ${className}" aria-label="rating ${rating}">${stars}<b>${rating.toFixed(1)}</b></div>`;
 }
 
 function textBlockMarkup(value = "") {
@@ -213,7 +215,7 @@ function recommendReasonMarkup(item) {
   if (!content) return "";
   return `
     <section class="recommend-reason">
-      <h3>个人推荐理由</h3>
+      <h3>&#20010;&#20154;&#35780;&#20215;</h3>
       ${content}
     </section>
   `;
@@ -333,17 +335,19 @@ function renderFeaturedManga() {
     .slice(0, 1);
 
   if (!featured.length) {
+    elements.mangaView.classList.remove("has-featured");
     elements.featuredManga.hidden = true;
     elements.featuredManga.innerHTML = "";
     return;
   }
 
+  elements.mangaView.classList.add("has-featured");
   elements.featuredManga.hidden = false;
   elements.featuredManga.innerHTML = `
     <div class="featured-copy">
-      <p>HOME FEATURE</p>
-      <h3>&#20170;&#26085;&#31934;&#36873;</h3>
-      <span>&#20174;&#24050;&#19978;&#20256;&#30340;&#28459;&#30011;&#37324;&#25361;&#19968;&#26412;&#65292;&#20316;&#20026;&#39318;&#39029;&#30340;&#27599;&#26085;&#25512;&#33616;&#12290;</span>
+      <p>TODAY AQUA PICK</p>
+      <h3>&#20170;&#26085;&#25512;&#33616;</h3>
+      <span>&#20170;&#26085;&#12398;&#19968;&#20874;&#12434;&#12289;&#12354;&#12367;&#12354;&#33394;&#12398;&#27671;&#20998;&#12391;&#36984;&#12403;&#12414;&#12375;&#12383;&#12290;</span>
     </div>
     <div class="featured-list">
       ${featured
@@ -606,7 +610,6 @@ function openMangaEditor(id) {
   form.elements.featured.checked = Boolean(item.featured);
   form.elements.description.value = item.description || "";
   form.elements.recommendReason.value = item.recommendReason || "";
-  form.elements.highlightImage.value = "";
   form.elements.highlightImageUrl.value = "";
   form.elements.removeHighlightImage.checked = false;
   elements.editMangaDialog.showModal();
@@ -638,11 +641,9 @@ async function submitMangaEdit(event) {
   label.textContent = "正在保存修改...";
   try {
     const current = state.manga[index];
-    const highlightFile = data.get("highlightImage");
     let highlightImage = current.highlightImage || "";
     if (data.get("removeHighlightImage") === "on") highlightImage = "";
     if (highlightUrl) highlightImage = highlightUrl;
-    if (highlightFile?.size) highlightImage = highlightFile;
     const updated = {
       ...current,
       title: data.get("title").trim(),
@@ -960,7 +961,7 @@ async function buildPublishPackage() {
       if (typeof item.highlightImage === "string") {
         published.highlightImage = item.highlightImage;
       } else {
-        published.highlightImage = `assets/manga/${safeFilePart(item.id)}-highlight.${fileExtension(item.highlightImage, "jpg")}`;
+        published.highlightImage = `assets/highlightImage/${safeFilePart(item.id)}.${fileExtension(item.highlightImage, "jpg")}`;
         entries.push({ name: published.highlightImage, data: item.highlightImage });
       }
     }

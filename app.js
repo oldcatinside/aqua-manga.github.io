@@ -329,8 +329,8 @@ function renderMangaPagination(totalItems, totalPages) {
 function renderFeaturedManga() {
   const featured = state.manga
     .filter((item) => item.featured)
-    .sort((a, b) => normalizeRating(b.rating) - normalizeRating(a.rating))
-    .slice(0, 3);
+    .sort((a, b) => (b.updatedAt || b.createdAt || 0) - (a.updatedAt || a.createdAt || 0))
+    .slice(0, 1);
 
   if (!featured.length) {
     elements.featuredManga.hidden = true;
@@ -342,8 +342,8 @@ function renderFeaturedManga() {
   elements.featuredManga.innerHTML = `
     <div class="featured-copy">
       <p>HOME FEATURE</p>
-      <h3>&#39318;&#39029;&#31934;&#36873;</h3>
-      <span>&#20174;&#25910;&#34255;&#37324;&#25361;&#20986;&#26469;&#65292;&#24819;&#35753;&#20154;&#20808;&#30475;&#21040;&#30340;&#20960;&#37096;&#12290;</span>
+      <h3>&#20170;&#26085;&#31934;&#36873;</h3>
+      <span>&#20174;&#24050;&#19978;&#20256;&#30340;&#28459;&#30011;&#37324;&#25361;&#19968;&#26412;&#65292;&#20316;&#20026;&#39318;&#39029;&#30340;&#27599;&#26085;&#25512;&#33616;&#12290;</span>
     </div>
     <div class="featured-list">
       ${featured
@@ -454,6 +454,23 @@ function renderAll() {
   renderFeaturedManga();
   renderManga();
   renderMusic();
+}
+
+async function keepOnlyFeaturedManga(selectedId) {
+  const updates = [];
+  state.manga = state.manga.map((item) => {
+    if (item.id === selectedId || !item.featured) return item;
+    const updated = {
+      ...item,
+      featured: false,
+      local: true,
+      published: item.published ?? !item.local,
+      updatedAt: Date.now(),
+    };
+    updates.push(saveItem("manga", updated));
+    return updated;
+  });
+  await Promise.all(updates);
 }
 
 function openMangaDetail(id) {
@@ -645,6 +662,7 @@ async function submitMangaEdit(event) {
     };
     await saveItem("manga", updated);
     state.manga[index] = updated;
+    if (updated.featured) await keepOnlyFeaturedManga(updated.id);
     renderAll();
     openMangaDetail(id);
     elements.editMangaDialog.close();
@@ -1112,6 +1130,7 @@ async function submitManga(event) {
     };
     await saveItem("manga", item);
     state.manga.unshift(item);
+    if (item.featured) await keepOnlyFeaturedManga(item.id);
     state.mangaPage = 1;
     form.reset();
     document.querySelector("#mangaFileStatus").textContent = "支持 JPG、PNG、WEBP";

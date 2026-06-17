@@ -916,14 +916,14 @@ main {
 
 .featured-list {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(260px, 1fr);
   gap: 10px;
 }
 
 .featured-card {
   min-width: 0;
   display: grid;
-  grid-template-columns: 66px minmax(0, 1fr);
+  grid-template-columns: 82px minmax(0, 1fr);
   align-items: center;
   gap: 11px;
   padding: 10px;
@@ -943,8 +943,8 @@ main {
 }
 
 .featured-thumb {
-  width: 66px;
-  height: 86px;
+  width: 82px;
+  height: 106px;
   overflow: hidden;
   border: 2px solid white;
   border-radius: 14px;
@@ -2871,7 +2871,7 @@ dialog::backdrop {
   }
 
   .featured-list {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
   }
 
   .player {

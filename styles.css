@@ -864,19 +864,13 @@ main {
 }
 
 .featured-manga {
-  width: 280px;
   display: grid;
-  grid-template-columns: 1fr;
-  align-items: start;
-  gap: 14px;
-  position: fixed;
-  left: max(24px, calc((100vw - 1180px) / 2 - 320px));
-  top: 230px;
-  z-index: 12;
-  max-height: calc(100vh - 260px);
-  overflow: auto;
-  margin: 0;
-  padding: 18px;
+  grid-template-columns: minmax(190px, 0.72fr) minmax(0, 1.28fr);
+  align-items: center;
+  gap: 22px;
+  width: 100%;
+  margin: 34px 0 0;
+  padding: 20px 22px;
   border: 1px solid rgba(98, 84, 173, 0.1);
   border-radius: 26px;
   background:
@@ -885,8 +879,6 @@ main {
     rgba(255, 255, 255, 0.72);
   box-shadow: 0 14px 36px rgba(61, 68, 106, 0.07);
   backdrop-filter: blur(18px);
-  scrollbar-width: thin;
-  scrollbar-color: rgba(231, 130, 183, 0.55) rgba(255, 255, 255, 0.35);
 }
 
 .featured-manga[hidden] {
@@ -897,7 +889,7 @@ main {
   min-height: 0;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   padding: 3px 2px 0;
 }
 
@@ -912,7 +904,7 @@ main {
 .featured-copy h3 {
   margin: 0 0 7px;
   font-family: Georgia, "STSong", "Songti SC", serif;
-  font-size: 27px;
+  font-size: 28px;
   font-weight: 500;
 }
 
@@ -932,9 +924,9 @@ main {
 .featured-card {
   min-width: 0;
   display: grid;
-  grid-template-columns: 1fr;
-  align-items: start;
-  gap: 13px;
+  grid-template-columns: 150px minmax(0, 1fr);
+  align-items: center;
+  gap: 18px;
   padding: 12px;
   color: inherit;
   text-align: left;
@@ -953,7 +945,7 @@ main {
 
 .featured-thumb {
   width: 100%;
-  height: 300px;
+  height: 205px;
   position: relative;
   overflow: hidden;
   border: 3px solid white;
@@ -981,18 +973,19 @@ main {
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
 }
 
 .featured-card-copy strong {
   margin-bottom: 6px;
   font-family: Georgia, "STSong", "Songti SC", serif;
-  font-size: 18px;
+  font-size: 22px;
+  line-height: 1.35;
 }
 
 .featured-card-copy small {
   color: var(--muted);
-  font-size: 9px;
+  font-size: 11px;
+  line-height: 1.7;
 }
 
 .rating-stars {
@@ -2925,11 +2918,9 @@ dialog::backdrop {
   }
 
   .featured-manga {
-    position: static;
-    width: min(100%, 320px);
-    max-height: none;
-    overflow: visible;
-    margin: 0 0 28px;
+    grid-template-columns: minmax(170px, 0.7fr) minmax(0, 1.3fr);
+    width: 100%;
+    margin: 28px 0 0;
   }
 
   .featured-list {
@@ -2937,7 +2928,7 @@ dialog::backdrop {
   }
 
   .featured-thumb {
-    height: 260px;
+    height: 190px;
   }
 
   .player {
@@ -3033,8 +3024,16 @@ dialog::backdrop {
     grid-template-columns: 1fr;
   }
 
+  .featured-manga {
+    grid-template-columns: 1fr;
+  }
+
+  .featured-card {
+    grid-template-columns: 120px minmax(0, 1fr);
+  }
+
   .featured-thumb {
-    height: 220px;
+    height: 165px;
   }
 
   .favorite-scene {

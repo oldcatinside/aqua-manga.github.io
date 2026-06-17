@@ -91,6 +91,7 @@
           </label>
         </div>
 
+        <div class="featured-manga" id="featuredManga" hidden></div>
         <div class="manga-grid" id="mangaGrid"></div>
         <div class="empty-state" id="mangaEmpty" hidden>
           <span>水</span>
@@ -249,9 +250,41 @@
             <span>推荐语</span>
             <input name="quote" />
           </label>
+          <label>
+            <span>推荐等级</span>
+            <select name="rating">
+              <option value="0">不显示星级</option>
+              <option value="1">★☆☆☆☆</option>
+              <option value="2">★★☆☆☆</option>
+              <option value="3">★★★☆☆</option>
+              <option value="4">★★★★☆</option>
+              <option value="5">★★★★★</option>
+            </select>
+          </label>
+          <label class="check-field">
+            <input name="featured" type="checkbox" />
+            <span>放入首页精选区域</span>
+          </label>
           <label class="full-field">
             <span>作品简介 *</span>
             <textarea name="description" required rows="8"></textarea>
+          </label>
+          <label class="full-field">
+            <span>个人推荐理由（可分段，可留空）</span>
+            <textarea name="recommendReason" rows="5" placeholder="写下你真正想把它推荐给别人的理由。留空时详情页不会显示这一块。"></textarea>
+          </label>
+          <label class="full-field">
+            <span>名场面截图 / 喜欢的页（可选）</span>
+            <input name="highlightImage" type="file" accept="image/*" />
+            <small>只选择一张。用于详情页里的小展示，不会替换封面。</small>
+          </label>
+          <label class="full-field">
+            <span>名场面截图 COS 网址（可选）</span>
+            <input name="highlightImageUrl" type="url" placeholder="https://存储桶域名.cos.ap-guangzhou.myqcloud.com/highlightImage/example-scene.webp" />
+          </label>
+          <label class="check-field full-field">
+            <input name="removeHighlightImage" type="checkbox" />
+            <span>移除当前名场面截图</span>
           </label>
         </div>
         <div class="edit-preserve-note">
@@ -323,6 +356,21 @@
             <span>推荐语</span>
             <input name="quote" placeholder="一句话写下推荐理由" />
           </label>
+          <label>
+            <span>????</span>
+            <select name="rating">
+              <option value="0">&#19981;&#26174;&#31034;&#26143;&#32423;</option>
+              <option value="1">&#9733;&#9734;&#9734;&#9734;&#9734;</option>
+              <option value="2">&#9733;&#9733;&#9734;&#9734;&#9734;</option>
+              <option value="3">&#9733;&#9733;&#9733;&#9734;&#9734;</option>
+              <option value="4">&#9733;&#9733;&#9733;&#9733;&#9734;</option>
+              <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733;</option>
+            </select>
+          </label>
+          <label class="check-field">
+            <input name="featured" type="checkbox" />
+            <span>&#25918;&#20837;&#39318;&#39029;&#31934;&#36873;&#21306;&#22495;</span>
+          </label>
           <label class="full-field">
             <span>作品简介 *</span>
             <textarea name="description" required rows="5" placeholder="介绍一下这部漫画打动你的地方..."></textarea>
@@ -336,6 +384,14 @@
             ></textarea>
             <small>已经上传到腾讯云 COS 时填写；可与下方本地图片二选一。</small>
           </label>
+          <label class="full-field">
+            <span>&#20010;&#20154;&#25512;&#33616;&#29702;&#30001;&#65288;&#21487;&#20998;&#27573;&#65292;&#21487;&#30041;&#31354;&#65289;</span>
+            <textarea name="recommendReason" rows="4" placeholder="&#20363;&#22914;&#65306;&#20026;&#20160;&#20040;&#23427;&#20540;&#24471;&#34987;&#25910;&#34255;&#65292;&#21738;&#19968;&#27573;&#26368;&#25171;&#21160;&#20320;&#12290;"></textarea>
+          </label>
+          <label class="full-field">
+            <span>&#21517;&#22330;&#38754;&#25130;&#22270; COS &#32593;&#22336;&#65288;&#21487;&#36873;&#65289;</span>
+            <input name="highlightImageUrl" type="url" placeholder="https://bucket.cos.ap-guangzhou.myqcloud.com/highlightImage/example-scene.webp" />
+          </label>
         </div>
         <label class="drop-zone" id="mangaDropZone">
           <input name="images" type="file" accept="image/*" multiple />
@@ -345,6 +401,16 @@
           <strong>上传封面与漫画截图</strong>
           <span>可多选，第一张图片将作为封面</span>
           <small id="mangaFileStatus">支持 JPG、PNG、WEBP</small>
+        </label>
+        <label class="drop-zone compact-drop">
+          <input name="highlightImage" type="file" accept="image/*" />
+          <svg viewBox="0 0 24 24">
+            <path d="M4 5h16v14H4z" />
+            <path d="m7 15 3-3 2 2 3-4 2 5" />
+          </svg>
+          <strong>&#19978;&#20256;&#21517;&#22330;&#38754;&#25130;&#22270; / &#21916;&#27426;&#30340;&#39029;&#65288;&#21487;&#36873;&#65289;</strong>
+          <span>&#21482;&#38656;&#35201;&#19968;&#24352;&#65307;&#27809;&#26377;&#19978;&#20256;&#26102;&#35814;&#24773;&#39029;&#19981;&#20250;&#26174;&#31034;</span>
+          <small id="highlightFileStatus">&#25903;&#25345; JPG&#12289;PNG&#12289;WEBP</small>
         </label>
         <button class="submit-button" type="submit">
           <span>保存漫画收藏</span>

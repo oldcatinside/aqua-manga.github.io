@@ -39,6 +39,7 @@ const state = {
 const elements = {
   mangaView: document.querySelector("#mangaView"),
   musicView: document.querySelector("#musicView"),
+  featuredManga: document.querySelector("#featuredManga"),
   mangaGrid: document.querySelector("#mangaGrid"),
   musicList: document.querySelector("#musicList"),
   mangaEmpty: document.querySelector("#mangaEmpty"),
@@ -183,6 +184,55 @@ function detailCoverMarkup(item) {
   `;
 }
 
+function normalizeRating(value) {
+  const rating = Number(value);
+  if (!Number.isFinite(rating)) return 0;
+  return Math.min(5, Math.max(0, Math.round(rating)));
+}
+
+function ratingMarkup(item, className = "") {
+  const rating = normalizeRating(item.rating);
+  if (!rating) return "";
+  const stars = Array.from({ length: 5 }, (_, index) =>
+    `<span class="${index < rating ? "filled" : ""}">&#9733;</span>`,
+  ).join("");
+  return `<div class="rating-stars ${className}" aria-label="推荐等级 ${rating} 星">${stars}</div>`;
+}
+
+function textBlockMarkup(value = "") {
+  return String(value)
+    .split(/\n{2,}/)
+    .map((part) => part.trim())
+    .filter(Boolean)
+    .map((part) => `<p>${escapeHtml(part)}</p>`)
+    .join("");
+}
+
+function recommendReasonMarkup(item) {
+  const content = textBlockMarkup(item.recommendReason || "");
+  if (!content) return "";
+  return `
+    <section class="recommend-reason">
+      <h3>个人推荐理由</h3>
+      ${content}
+    </section>
+  `;
+}
+
+function highlightImageMarkup(item) {
+  if (!item.highlightImage) return "";
+  const url = escapeHtml(mediaUrl(item.highlightImage));
+  return `
+    <section class="favorite-scene">
+      <div>
+        <span>FAVORITE PAGE</span>
+        <h3>名场面截图</h3>
+      </div>
+      <img src="${url}" alt="${escapeHtml(item.title)}名场面截图" />
+    </section>
+  `;
+}
+
 function formatTime(seconds) {
   if (!Number.isFinite(seconds) || seconds < 0) return "0:00";
   const minutes = Math.floor(seconds / 60);
@@ -276,6 +326,47 @@ function renderMangaPagination(totalItems, totalPages) {
   `;
 }
 
+function renderFeaturedManga() {
+  const featured = state.manga
+    .filter((item) => item.featured)
+    .sort((a, b) => normalizeRating(b.rating) - normalizeRating(a.rating))
+    .slice(0, 3);
+
+  if (!featured.length) {
+    elements.featuredManga.hidden = true;
+    elements.featuredManga.innerHTML = "";
+    return;
+  }
+
+  elements.featuredManga.hidden = false;
+  elements.featuredManga.innerHTML = `
+    <div class="featured-copy">
+      <p>HOME FEATURE</p>
+      <h3>&#39318;&#39029;&#31934;&#36873;</h3>
+      <span>&#20174;&#25910;&#34255;&#37324;&#25361;&#20986;&#26469;&#65292;&#24819;&#35753;&#20154;&#20808;&#30475;&#21040;&#30340;&#20960;&#37096;&#12290;</span>
+    </div>
+    <div class="featured-list">
+      ${featured
+        .map((item) => {
+          const image = item.images?.[0] || item.cover;
+          return `
+            <button class="featured-card" data-featured-manga="${escapeHtml(item.id)}" type="button">
+              <span class="featured-thumb">
+                ${image ? `<img src="${escapeHtml(mediaUrl(image))}" alt="" />` : placeholderCover(item, true)}
+              </span>
+              <span class="featured-card-copy">
+                <strong>${escapeHtml(item.title)}</strong>
+                <small>${escapeHtml(item.quote || item.genre || "Aqua pick")}</small>
+                ${ratingMarkup(item, "featured-rating")}
+              </span>
+            </button>
+          `;
+        })
+        .join("")}
+    </div>
+  `;
+}
+
 function renderManga() {
   const query = elements.mangaSearch.value.trim().toLocaleLowerCase();
   const filtered = state.manga.filter((item) => {
@@ -301,6 +392,7 @@ function renderManga() {
             </div>
             <div class="manga-info">
               <h3>${escapeHtml(item.title)}</h3>
+              ${ratingMarkup(item, "card-rating")}
               <p>
                 <span>${escapeHtml(item.author)}</span>
                 <span>${escapeHtml(item.genre || "未分类")}</span>
@@ -359,6 +451,7 @@ function renderMusic() {
 
 function renderAll() {
   updateCounts();
+  renderFeaturedManga();
   renderManga();
   renderMusic();
 }
@@ -387,10 +480,13 @@ function openMangaDetail(id) {
           }
         </div>
         <h2>${escapeHtml(item.title)}</h2>
+        ${ratingMarkup(item, "detail-rating")}
         <p class="detail-author">作者 · ${escapeHtml(item.author)}</p>
         <span class="detail-genre">${escapeHtml(item.genre || "未分类")}</span>
         <p class="detail-description">${escapeHtml(item.description)}</p>
         ${item.quote ? `<blockquote class="detail-quote">${escapeHtml(item.quote)}</blockquote>` : ""}
+        ${recommendReasonMarkup(item)}
+        ${highlightImageMarkup(item)}
         ${
           screenshots.length
             ? `
@@ -489,7 +585,13 @@ function openMangaEditor(id) {
   form.elements.author.value = item.author || "";
   form.elements.genre.value = item.genre || "";
   form.elements.quote.value = item.quote || "";
+  form.elements.rating.value = String(normalizeRating(item.rating));
+  form.elements.featured.checked = Boolean(item.featured);
   form.elements.description.value = item.description || "";
+  form.elements.recommendReason.value = item.recommendReason || "";
+  form.elements.highlightImage.value = "";
+  form.elements.highlightImageUrl.value = "";
+  form.elements.removeHighlightImage.checked = false;
   elements.editMangaDialog.showModal();
 }
 
@@ -505,19 +607,36 @@ async function submitMangaEdit(event) {
     return;
   }
 
+  let highlightUrl = "";
+  try {
+    highlightUrl = parsePublicUrls(data.get("highlightImageUrl"))[0] || "";
+  } catch (error) {
+    showToast(`名场面截图网址有误：${error.message}`);
+    return;
+  }
+
   const button = form.querySelector(".submit-button");
   const label = button.querySelector("span");
   button.disabled = true;
   label.textContent = "正在保存修改...";
   try {
     const current = state.manga[index];
+    const highlightFile = data.get("highlightImage");
+    let highlightImage = current.highlightImage || "";
+    if (data.get("removeHighlightImage") === "on") highlightImage = "";
+    if (highlightUrl) highlightImage = highlightUrl;
+    if (highlightFile?.size) highlightImage = highlightFile;
     const updated = {
       ...current,
       title: data.get("title").trim(),
       author: data.get("author").trim(),
       genre: data.get("genre").trim() || "其他",
       quote: data.get("quote").trim(),
+      rating: normalizeRating(data.get("rating")),
+      featured: data.get("featured") === "on",
       description: data.get("description").trim(),
+      recommendReason: data.get("recommendReason").trim(),
+      highlightImage,
       images: current.images || [],
       local: true,
       published: current.published ?? !current.local,
@@ -631,9 +750,11 @@ function updatePublishSummary() {
     );
     const coverBytes =
       item.cover && typeof item.cover !== "string" ? item.cover.size || 0 : 0;
+    const highlightBytes =
+      item.highlightImage && typeof item.highlightImage !== "string" ? item.highlightImage.size || 0 : 0;
     const audioBytes =
       item.audio && typeof item.audio !== "string" ? item.audio.size || 0 : 0;
-    return total + imageBytes + coverBytes + audioBytes;
+    return total + imageBytes + coverBytes + highlightBytes + audioBytes;
   }, 0);
   elements.publishMangaCount.textContent = state.manga.length;
   elements.publishMusicCount.textContent = state.music.length;
@@ -799,7 +920,11 @@ async function buildPublishPackage() {
       author: item.author,
       genre: item.genre || "其他",
       quote: item.quote || "",
+      rating: normalizeRating(item.rating),
+      featured: Boolean(item.featured),
       description: item.description || "",
+      recommendReason: item.recommendReason || "",
+      highlightImage: "",
       coverTheme: item.coverTheme || "",
       images: [],
     };
@@ -811,6 +936,14 @@ async function buildPublishPackage() {
         const path = `assets/manga/${safeFilePart(item.id)}-${String(index + 1).padStart(2, "0")}.${fileExtension(image, "jpg")}`;
         entries.push({ name: path, data: image });
         published.images.push(path);
+      }
+    }
+    if (item.highlightImage) {
+      if (typeof item.highlightImage === "string") {
+        published.highlightImage = item.highlightImage;
+      } else {
+        published.highlightImage = `assets/manga/${safeFilePart(item.id)}-highlight.${fileExtension(item.highlightImage, "jpg")}`;
+        entries.push({ name: published.highlightImage, data: item.highlightImage });
       }
     }
     publishedManga.push(published);
@@ -942,8 +1075,10 @@ async function submitManga(event) {
   const form = event.currentTarget;
   const formData = new FormData(form);
   let imageUrls;
+  let highlightUrl = "";
   try {
     imageUrls = parsePublicUrls(formData.get("imageUrls"));
+    highlightUrl = parsePublicUrls(formData.get("highlightImageUrl"))[0] || "";
   } catch (error) {
     showToast(`腾讯云 COS 图片网址有误：${error.message}`);
     return;
@@ -957,13 +1092,19 @@ async function submitManga(event) {
 
   setButtonBusy(form, true);
   try {
+    const highlightFile = formData.get("highlightImage");
+    const highlightImage = highlightUrl || (highlightFile?.size ? highlightFile : "");
     const item = {
       id: createId("manga"),
       title: formData.get("title").trim(),
       author: formData.get("author").trim(),
       genre: formData.get("genre").trim() || "其他",
       quote: formData.get("quote").trim(),
+      rating: normalizeRating(formData.get("rating")),
+      featured: formData.get("featured") === "on",
       description: formData.get("description").trim(),
+      recommendReason: formData.get("recommendReason").trim(),
+      highlightImage,
       images,
       local: true,
       published: false,
@@ -1259,6 +1400,11 @@ function bindEvents() {
     elements.mangaGrid.scrollIntoView({ behavior: "smooth", block: "start" });
   });
 
+  elements.featuredManga.addEventListener("click", (event) => {
+    const card = event.target.closest("[data-featured-manga]");
+    if (card) openMangaDetail(card.dataset.featuredManga);
+  });
+
   elements.mangaGrid.addEventListener("click", (event) => {
     const deleteButton = event.target.closest("[data-delete-id]");
     if (deleteButton) {
@@ -1300,6 +1446,13 @@ function bindEvents() {
   mangaInput.addEventListener("change", () => {
     document.querySelector("#mangaFileStatus").textContent = mangaInput.files.length
       ? `已选择 ${mangaInput.files.length} 张图片`
+      : "支持 JPG、PNG、WEBP";
+  });
+
+  const highlightInput = elements.mangaForm.querySelector('[name="highlightImage"]');
+  highlightInput.addEventListener("change", () => {
+    document.querySelector("#highlightFileStatus").textContent = highlightInput.files[0]
+      ? `已选择 ${highlightInput.files[0].name}`
       : "支持 JPG、PNG、WEBP";
   });
 

@@ -863,43 +863,18 @@ main {
   gap: 22px;
 }
 
-:is(#mangaView.has-featured, #mangaView:has(.featured-manga:not([hidden]))) {
-  display: grid;
-  grid-template-columns: minmax(260px, 315px) minmax(0, 1fr);
-  gap: 28px;
-  align-items: start;
-}
-
-#mangaView.has-featured .section-heading,
-#mangaView:has(.featured-manga:not([hidden])) .section-heading {
-  grid-column: 2;
-  grid-row: 1;
-  width: 100%;
-}
-
-#mangaView.has-featured .manga-grid,
-#mangaView.has-featured .empty-state,
-#mangaView.has-featured .manga-pagination,
-#mangaView:has(.featured-manga:not([hidden])) .manga-grid,
-#mangaView:has(.featured-manga:not([hidden])) .empty-state,
-#mangaView:has(.featured-manga:not([hidden])) .manga-pagination {
-  grid-column: 2;
-}
-
-#mangaView.has-featured .manga-grid,
-#mangaView:has(.featured-manga:not([hidden])) .manga-grid {
-  grid-template-columns: repeat(3, 1fr);
-}
-
 .featured-manga {
+  width: 280px;
   display: grid;
   grid-template-columns: 1fr;
   align-items: start;
   gap: 14px;
-  grid-column: 1;
-  grid-row: 1 / span 4;
-  position: sticky;
-  top: 104px;
+  position: fixed;
+  left: max(24px, calc((100vw - 1180px) / 2 - 320px));
+  top: 230px;
+  z-index: 12;
+  max-height: calc(100vh - 260px);
+  overflow: auto;
   margin: 0;
   padding: 18px;
   border: 1px solid rgba(98, 84, 173, 0.1);
@@ -910,6 +885,8 @@ main {
     rgba(255, 255, 255, 0.72);
   box-shadow: 0 14px 36px rgba(61, 68, 106, 0.07);
   backdrop-filter: blur(18px);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(231, 130, 183, 0.55) rgba(255, 255, 255, 0.35);
 }
 
 .featured-manga[hidden] {
@@ -976,7 +953,7 @@ main {
 
 .featured-thumb {
   width: 100%;
-  height: 340px;
+  height: 300px;
   position: relative;
   overflow: hidden;
   border: 3px solid white;
@@ -2947,19 +2924,12 @@ dialog::backdrop {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  :is(#mangaView.has-featured, #mangaView:has(.featured-manga:not([hidden]))) {
-    display: block;
-  }
-
-  #mangaView.has-featured .manga-grid,
-  #mangaView:has(.featured-manga:not([hidden])) .manga-grid {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
   .featured-manga {
-    grid-template-columns: 1fr;
     position: static;
-    margin: 8px 0 26px;
+    width: min(100%, 320px);
+    max-height: none;
+    overflow: visible;
+    margin: 0 0 28px;
   }
 
   .featured-list {

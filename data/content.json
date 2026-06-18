@@ -1,7 +1,23 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-17T13:07:17.528Z",
+  "generatedAt": "2026-06-18T04:32:44.020Z",
   "manga": [
+    {
+      "id": "manga-878c2b3e-8153-4eac-91e2-1d52965da4ff",
+      "title": "世界最强魔女，始动 ～在只有我能看到『攻略网站』的世界自由过活～",
+      "author": "户贺环",
+      "genre": "冒险",
+      "quote": "“我明明只是想过上和平而自由的生活而已……”",
+      "rating": 4.0,
+      "featured": false,
+      "description": "“居然发现是SSS级这种最弱技能真是丢死个人！”\r\n少女罗娜就这样被赶出了家门。\r\n\r\n就在既没钱也没吃的又没力量的走投无路的时候，\r\n“……攻略wéi jī？”\r\n她注意到了自己独一无二的固有技能【互联网】的用法。\r\n这个技能其实是能够看到这个世界的“攻略网站”的，不得了的开挂技能！！\r\n无限量产贵重道具！\r\n超稀有装备也可以绕开事件直接入手？！\r\n多亏了这技能想干什么就干什么……！\r\n\r\n“我，从今往后想要自由地生活！”\r\n愉快痛快的异世界奇幻故事，开始了！",
+      "recommendReason": "夹杂很多neta的美少女冒险，很有趣",
+      "highlightImage": "",
+      "coverTheme": "",
+      "images": [
+        "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/manga/%E4%B8%96%E7%95%8C%E6%9C%80%E5%BC%BA%E9%AD%94%E5%A5%B3%EF%BC%8C%E5%A7%8B%E5%8A%A8%20%EF%BD%9E%E5%9C%A8%E5%8F%AA%E6%9C%89%E6%88%91%E8%83%BD%E7%9C%8B%E5%88%B0%E3%80%8E%E6%94%BB%E7%95%A5%E7%BD%91%E7%AB%99%E3%80%8F%E7%9A%84%E4%B8%96%E7%95%8C%E8%87%AA%E7%94%B1%E8%BF%87%E6%B4%BB%EF%BD%9E-29392e1c-01.webp"
+      ]
+    },
     {
       "id": "manga-443f7d41-b36b-4f86-920d-5184cb623c3d",
       "title": "婚姻剧毒",
@@ -276,6 +292,28 @@
     }
   ],
   "music": [
+    {
+      "id": "music-3d9af888-9ddf-46f7-851b-ddbbb2095b42",
+      "title": "第六感",
+      "artist": "Reol",
+      "album": "感",
+      "duration": 191.66040816326532,
+      "coverTheme": "",
+      "demo": false,
+      "cover": "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/music/pic/Reol%20-%20%E7%AC%AC%E5%85%AD%E6%84%9F-643b6303.webp",
+      "audio": "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/music/mp3/Reol%20-%20%E7%AC%AC%E5%85%AD%E6%84%9F-643b6303.mp3"
+    },
+    {
+      "id": "music-8b7493c9-4b1a-45ce-9f7d-86c472e84ca1",
+      "title": "潜在的なアイ",
+      "artist": "13.3g",
+      "album": "潜",
+      "duration": 206.3673469387755,
+      "coverTheme": "",
+      "demo": false,
+      "cover": "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/music/pic/13.3g%20-%20%E6%BD%9C%E5%9C%A8%E7%9A%84%E3%81%AA%E3%82%A2%E3%82%A4-73897b31.webp",
+      "audio": "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/music/mp3/13.3g%20-%20%E6%BD%9C%E5%9C%A8%E7%9A%84%E3%81%AA%E3%82%A2%E3%82%A4-73897b31.mp3"
+    },
     {
       "id": "music-8600c608-564c-4315-8db8-7a9c6b55a27c",
       "title": "五等分のカタチ",

@@ -1,7 +1,23 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-18T04:32:44.020Z",
+  "generatedAt": "2026-06-19T12:25:02.933Z",
   "manga": [
+    {
+      "id": "manga-623a95db-8a83-4e20-b816-6dc9d21fa9d6",
+      "title": "败犬女主太多了！",
+      "author": "いたち",
+      "genre": "恋爱",
+      "quote": "“……愿那些正因为败北才闪耀的少女们，得到幸福。”",
+      "rating": 5.0,
+      "featured": false,
+      "description": "平常担任班上背景人物的我──温水和彦，偶然目击人气女同学八奈见杏菜被男生甩掉的失恋现场。\r\n\r\n「他明明说过要娶我当新娘，这不过分吗？」\r\n「那是多久前的事了？」\r\n「大概四、五岁吧。」\r\n\r\n那不算数吧？\r\n以此为契机，田径队的烧盐柠檬、文艺社的小鞠知花等洋溢着败北感的女生接连登场──？\r\n\r\n「温水，女生可以分成两大类。如果不是青梅竹马，就是偷腥猫（狐狸精）。」\r\n「原来如此，真豪爽的分类法。」\r\n……但愿这些因为败北而闪耀的少女们都能幸福。\r\n\r\n被败北女角──败女所环绕的谜样青春，在此揭幕！",
+      "recommendReason": "漫八！",
+      "highlightImage": "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/highlightImage/%E8%B4%A5%E7%8A%AC%E5%A5%B3%E4%B8%BB%E5%A4%AA%E5%A4%9A%E4%BA%86%EF%BC%81-f32d1fb9.webp",
+      "coverTheme": "",
+      "images": [
+        "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/manga/%E8%B4%A5%E7%8A%AC%E5%A5%B3%E4%B8%BB%E5%A4%AA%E5%A4%9A%E4%BA%86%EF%BC%81-f32d1fb9-01.webp"
+      ]
+    },
     {
       "id": "manga-878c2b3e-8153-4eac-91e2-1d52965da4ff",
       "title": "世界最强魔女，始动 ～在只有我能看到『攻略网站』的世界自由过活～",

@@ -226,11 +226,8 @@ function highlightImageMarkup(item) {
   const url = escapeHtml(mediaUrl(item.highlightImage));
   return `
     <section class="favorite-scene">
-      <div>
-        <span>FAVORITE PAGE</span>
-        <h3>名场面截图</h3>
-      </div>
-      <img src="${url}" alt="${escapeHtml(item.title)}名场面截图" />
+      <span>FAVORITE PAGE</span>
+      <img src="${url}" alt="${escapeHtml(item.title)} favorite page" />
     </section>
   `;
 }

@@ -1,7 +1,23 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-19T12:25:02.933Z",
+  "generatedAt": "2026-06-25T14:31:04.563Z",
   "manga": [
+    {
+      "id": "manga-58cfa30b-2bc3-4be4-9e7c-b870bce5173b",
+      "title": "战姬求生记 背负异世界命运的不正经异性交流",
+      "author": "otosama",
+      "genre": "冒险",
+      "quote": "“而且，魔法也无法使用了——”",
+      "rating": 4.5,
+      "featured": false,
+      "description": "被誉为千年一遇魔法天才的精灵安娜斯塔西娅，奔赴异世界三方混战的最终决战。\r\n\r\n在与宿敌魔族激战正酣之际，她被一道强烈的光芒笼罩，再度睁眼时，竟发现自己身处一座无人岛。\r\n\r\n当安娜斯塔西娅在岛上四处探索时，一名神秘人类突然现身，更糟的是，她的魔法竟然无法使用了……！？\r\n\r\n最强美少女们自异世界而来，与漂流至无人岛的大叔共同上演一场生存喜剧！",
+      "recommendReason": "二次元荒野求生，画面很干净",
+      "highlightImage": "",
+      "coverTheme": "",
+      "images": [
+        "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/manga/%E6%88%98%E5%A7%AC%E6%B1%82%E7%94%9F%E8%AE%B0%20%E8%83%8C%E8%B4%9F%E5%BC%82%E4%B8%96%E7%95%8C%E5%91%BD%E8%BF%90%E7%9A%84%E4%B8%8D%E6%AD%A3%E7%BB%8F%E5%BC%82%E6%80%A7%E4%BA%A4%E6%B5%81-95ef5586-01.webp"
+      ]
+    },
     {
       "id": "manga-623a95db-8a83-4e20-b816-6dc9d21fa9d6",
       "title": "败犬女主太多了！",
@@ -308,6 +324,17 @@
     }
   ],
   "music": [
+    {
+      "id": "music-3f6a5dd3-cdd9-4556-8924-0cc7e03a9f10",
+      "title": "君はロックを聴かない",
+      "artist": "あいみょん",
+      "album": "悸",
+      "duration": 246.33469387755102,
+      "coverTheme": "",
+      "demo": false,
+      "cover": "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/music/pic/%E3%81%82%E3%81%84%E3%81%BF%E3%82%87%E3%82%93%20-%20%E5%90%9B%E3%81%AF%E3%83%AD%E3%83%83%E3%82%AF%E3%82%92%E8%81%B4%E3%81%8B%E3%81%AA%E3%81%84-47876984.webp",
+      "audio": "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/music/mp3/%E3%81%82%E3%81%84%E3%81%BF%E3%82%87%E3%82%93%20-%20%E5%90%9B%E3%81%AF%E3%83%AD%E3%83%83%E3%82%AF%E3%82%92%E8%81%B4%E3%81%8B%E3%81%AA%E3%81%84-47876984.mp3"
+    },
     {
       "id": "music-3d9af888-9ddf-46f7-851b-ddbbb2095b42",
       "title": "第六感",

@@ -1,7 +1,23 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-25T14:31:04.563Z",
+  "generatedAt": "2026-06-27T14:26:37.821Z",
   "manga": [
+    {
+      "id": "manga-c305f428-148b-4ab2-8d00-813fc0d1072c",
+      "title": "公主的秘密与秘密的私生子",
+      "author": "つくものい",
+      "genre": "恋爱",
+      "quote": "“你释然的笑容澄澈得不染尘埃”",
+      "rating": 4.0,
+      "featured": false,
+      "description": "父亲去世后才发现，自己原来是他的私生子。\r\n\r\n震惊之下离家出走的上田直臣，遇到了同样因家庭烦恼而离家出走的少女·藤埼夕鹤。\r\n\r\n夕鹤请求直臣协助她进行一场假绑架，好让家人为自己担心。\r\n\r\n两人在相伴同行的时光里渐渐互生情愫，然而旅途尽头，一个惊人的真相浮出水面……？",
+      "recommendReason": "刚开始连载，目前的设定还挺有趣，希望不要是假骨科吧",
+      "highlightImage": "",
+      "coverTheme": "",
+      "images": [
+        "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/manga/%E5%85%AC%E4%B8%BB%E7%9A%84%E7%A7%98%E5%AF%86%E4%B8%8E%E7%A7%98%E5%AF%86%E7%9A%84%E7%A7%81%E7%94%9F%E5%AD%90-ee55a124-01.webp"
+      ]
+    },
     {
       "id": "manga-58cfa30b-2bc3-4be4-9e7c-b870bce5173b",
       "title": "战姬求生记 背负异世界命运的不正经异性交流",

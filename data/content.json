@@ -1,7 +1,23 @@
 {
   "version": 1,
-  "generatedAt": "2026-06-27T14:26:37.821Z",
+  "generatedAt": "2026-06-29T12:48:16.379Z",
   "manga": [
+    {
+      "id": "manga-0723f6a9-7a74-42ee-a0e2-1211099a4a92",
+      "title": "转生为懒惰的恶辱贵族，破坏剧情后，以超规格的魔力成为了最凶恶之人",
+      "author": "小田童馬",
+      "genre": "异世界",
+      "quote": "“那种剧情，我会亲手打碎。”",
+      "rating": 3.5,
+      "featured": false,
+      "description": "我竟然转生到了我最喜欢的学园游戏中，成为了那个恶名昭彰的反派贵族——维斯。\r\n\r\n 不久之后，等待着我的是无可救药的最糟糕结局。 我无论如何都要避免这样的命运！ \r\n\r\n既然如此，我只能获得连游戏主角都无法匹敌的、压倒性的力量，成为最强者！\r\n\r\n最凶恶的逆袭异世界学园幻想漫画化！！！",
+      "recommendReason": "本质搞笑漫画",
+      "highlightImage": "",
+      "coverTheme": "",
+      "images": [
+        "https://aqua-manga-media-1324192911.cos.ap-guangzhou.myqcloud.com/manga/%E8%BD%AC%E7%94%9F%E4%B8%BA%E6%87%92%E6%83%B0%E7%9A%84%E6%81%B6%E8%BE%B1%E8%B4%B5%E6%97%8F%EF%BC%8C%E7%A0%B4%E5%9D%8F%E5%89%A7%E6%83%85%E5%90%8E%EF%BC%8C%E4%BB%A5%E8%B6%85%E8%A7%84%E6%A0%BC%E7%9A%84%E9%AD%94%E5%8A%9B%E6%88%90%E4%B8%BA%E4%BA%86%E6%9C%80%E5%87%B6%E6%81%B6%E4%B9%8B%E4%BA%BA-9c3251e8-01.webp"
+      ]
+    },
     {
       "id": "manga-c305f428-148b-4ab2-8d00-813fc0d1072c",
       "title": "公主的秘密与秘密的私生子",
